@@ -15,7 +15,19 @@ int main(int argc, char *argv[]){
         return 0;
     }
 
-    printf("Listo\n");
+    int *len = malloc(sizeof(int));
+    char *buf = readfile(argv[2], len);
+
+    //Inicializar arreglo con frecuencias
+    int frecuencias[256];
+    for(int index = 0; index < 256; index++){
+        frecuencias[index] = 0;
+    }
+
+    //Calcular las frecuencias de cada caracter
+    for (int pos = 0; pos < (*len)-1; pos++){
+        frecuencias[(int)buf[pos]]++;
+    }
 
     return 0;
 }
