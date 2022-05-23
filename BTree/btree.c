@@ -5,6 +5,7 @@
 
 struct _BTNodo {
   int caracter;
+  int peso;
   struct _BTNodo *left;
   struct _BTNodo *right;
 };
@@ -38,9 +39,10 @@ int btree_empty(BTree nodo) { return nodo == NULL; }
 BTree btree_unir(int caracter, BTree left, BTree right) {
   BTree nuevoNodo = malloc(sizeof(struct _BTNodo));
   assert(nuevoNodo != NULL);
-  nuevoNodo->caracter = caracter;
+  nuevoNodo->caracter = -1;
   nuevoNodo->left = left;
   nuevoNodo->right = right;
+  nuevoNodo->peso = left->right + right->peso;
   return nuevoNodo;
 }  
 
