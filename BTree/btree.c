@@ -4,8 +4,7 @@
 #include <stdio.h>
 
 struct _BTNodo {
-  int peso;
-  char caracter;
+  int caracter;
   struct _BTNodo *left;
   struct _BTNodo *right;
 };
@@ -33,13 +32,13 @@ void btree_destruir(BTree nodo) {
 int btree_empty(BTree nodo) { return nodo == NULL; }
 
 /**
- * Crea un nuevo arbol, con el peso dado en el nodo raiz, y los subarboles dados
+ * Crea un nuevo arbol, con el caracter dado en el nodo raiz, y los subarboles dados
  * a izquierda y derecha.
  */
-BTree btree_unir(int peso, BTree left, BTree right) {
+BTree btree_unir(int caracter, BTree left, BTree right) {
   BTree nuevoNodo = malloc(sizeof(struct _BTNodo));
   assert(nuevoNodo != NULL);
-  nuevoNodo->peso = peso;
+  nuevoNodo->caracter = caracter;
   nuevoNodo->left = left;
   nuevoNodo->right = right;
   return nuevoNodo;
@@ -57,7 +56,7 @@ FuncionVisitante visit) {
       return;
     }
 
-    visit(nodo->peso);  // mostrar
+    visit(nodo->caracter);  // mostrar
 
     btree_recorrer(nodo->left, orden, visit);
 
@@ -72,7 +71,7 @@ FuncionVisitante visit) {
 
     btree_recorrer(nodo->left, orden, visit);
 
-    visit(nodo->peso);  // mostrar
+    visit(nodo->caracter);  // mostrar
 
     btree_recorrer(nodo->right, orden, visit);
   }
@@ -87,14 +86,14 @@ FuncionVisitante visit) {
 
     btree_recorrer(nodo->right, orden, visit);
 
-    visit(nodo->peso);  // mostrar
+    visit(nodo->caracter);  // mostrar
   }
   
   return;
 }
 
 // ej 3
-
+/*
 //a 
 int btree_nodos(BTree arbol){
   int cantN = 1;
@@ -109,29 +108,30 @@ int btree_nodos(BTree arbol){
   }
   return cantN;
 }
+*/
 
 //b
-int btree_buscar(BTree arbol, int peso){
-  printf("\nel arbol->peso es: %d y el peso es %d\n", arbol->peso, peso);
-  printf("%d", arbol->peso == peso);
+int btree_buscar(BTree arbol, int caracter){
+  printf("\nel arbol->caracter es: %d y el caracter es %d\n", arbol->caracter, caracter);
+  printf("%d", arbol->caracter == caracter);
   if(btree_empty(arbol)) return 0;
-  if(arbol->peso == peso){
+  if(arbol->caracter == caracter){
     printf("entroooooo");
     return 1;
   }
   if (!btree_empty(arbol->left)){
-    btree_buscar(arbol->left, peso);
+    btree_buscar(arbol->left, caracter);
   }
   if (!btree_empty(arbol->right)){
-    btree_buscar(arbol->right, peso);
+    btree_buscar(arbol->right, caracter);
   }
   // si estuviese ordenado
   /*
-  else if(arbol->peso > peso){
-    return btree_buscar(arbol->left, peso);
+  else if(arbol->caracter > caracter){
+    return btree_buscar(arbol->left, caracter);
   }
-  else if(arbol->peso < peso){
-    return btree_buscar(arbol->right, peso);
+  else if(arbol->caracter < caracter){
+    return btree_buscar(arbol->right, caracter);
   }
   */
   return 0;
@@ -167,11 +167,12 @@ int btree_nnodos_profundidad(BTree arbol, int lvlActual, int lvlDeseado){
   btree_nnodos_profundidad(arbol->right, lvlActual+1, lvlDeseado);
 }
 
+/*
 int btree_profundidad(BTree arbol, int nro, int lvlActual){
   if (btree_empty(arbol)){
     return -1;
   }
-  if (arbol->peso == nro){
+  if (arbol->caracter == nro){
     return lvlActual;
   }
   
@@ -184,12 +185,13 @@ int btree_profundidad(BTree arbol, int nro, int lvlActual){
 
   return lvl;
 }
+*/
 
 int btree_sumar(BTree arbol){ 
   if (btree_empty(arbol)){  // si vacio
     return -1;
   }
-  int suma =  arbol->peso;
+  int suma =  arbol->caracter;
   
   if(!btree_empty(arbol->left))
     suma += btree_sumar(arbol->left); 
