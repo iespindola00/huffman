@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "io.h"
+#include "IO/io.h"
 
 int main(int argc, char *argv[]){
 
@@ -27,6 +27,10 @@ int main(int argc, char *argv[]){
     //Calcular las frecuencias de cada caracter
     for (int pos = 0; pos < (*len)-1; pos++){
         frecuencias[(int)buf[pos]]++;
+    }
+
+    for(int index = 0; index < 256; index++){
+        printf("%d %d\n", index, frecuencias[index] );
     }
 
     return 0;
