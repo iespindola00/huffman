@@ -33,13 +33,13 @@ void btree_destruir(BTree nodo) {
 int btree_empty(BTree nodo) { return nodo == NULL; }
 
 /**
- * Crea un nuevo arbol, con el dato dado en el nodo raiz, y los subarboles dados
+ * Crea un nuevo arbol, con el peso dado en el nodo raiz, y los subarboles dados
  * a izquierda y derecha.
  */
-BTree btree_unir(int dato, BTree left, BTree right) {
+BTree btree_unir(int peso, BTree left, BTree right) {
   BTree nuevoNodo = malloc(sizeof(struct _BTNodo));
   assert(nuevoNodo != NULL);
-  nuevoNodo->dato = dato;
+  nuevoNodo->peso = peso;
   nuevoNodo->left = left;
   nuevoNodo->right = right;
   return nuevoNodo;
@@ -57,7 +57,7 @@ FuncionVisitante visit) {
       return;
     }
 
-    visit(nodo->dato);  // mostrar
+    visit(nodo->peso);  // mostrar
 
     btree_recorrer(nodo->left, orden, visit);
 
@@ -72,7 +72,7 @@ FuncionVisitante visit) {
 
     btree_recorrer(nodo->left, orden, visit);
 
-    visit(nodo->dato);  // mostrar
+    visit(nodo->peso);  // mostrar
 
     btree_recorrer(nodo->right, orden, visit);
   }
@@ -87,7 +87,7 @@ FuncionVisitante visit) {
 
     btree_recorrer(nodo->right, orden, visit);
 
-    visit(nodo->dato);  // mostrar
+    visit(nodo->peso);  // mostrar
   }
   
   return;
@@ -111,27 +111,27 @@ int btree_nodos(BTree arbol){
 }
 
 //b
-int btree_buscar(BTree arbol, int dato){
-  printf("\nel arbol->dato es: %d y el dato es %d\n", arbol->dato, dato);
-  printf("%d", arbol->dato == dato);
+int btree_buscar(BTree arbol, int peso){
+  printf("\nel arbol->peso es: %d y el peso es %d\n", arbol->peso, peso);
+  printf("%d", arbol->peso == peso);
   if(btree_empty(arbol)) return 0;
-  if(arbol->dato == dato){
+  if(arbol->peso == peso){
     printf("entroooooo");
     return 1;
   }
   if (!btree_empty(arbol->left)){
-    btree_buscar(arbol->left, dato);
+    btree_buscar(arbol->left, peso);
   }
   if (!btree_empty(arbol->right)){
-    btree_buscar(arbol->right, dato);
+    btree_buscar(arbol->right, peso);
   }
   // si estuviese ordenado
   /*
-  else if(arbol->dato > dato){
-    return btree_buscar(arbol->left, dato);
+  else if(arbol->peso > peso){
+    return btree_buscar(arbol->left, peso);
   }
-  else if(arbol->dato < dato){
-    return btree_buscar(arbol->right, dato);
+  else if(arbol->peso < peso){
+    return btree_buscar(arbol->right, peso);
   }
   */
   return 0;
@@ -171,7 +171,7 @@ int btree_profundidad(BTree arbol, int nro, int lvlActual){
   if (btree_empty(arbol)){
     return -1;
   }
-  if (arbol->dato == nro){
+  if (arbol->peso == nro){
     return lvlActual;
   }
   
@@ -189,7 +189,7 @@ int btree_sumar(BTree arbol){
   if (btree_empty(arbol)){  // si vacio
     return -1;
   }
-  int suma =  arbol->dato;
+  int suma =  arbol->peso;
   
   if(!btree_empty(arbol->left))
     suma += btree_sumar(arbol->left); 
