@@ -39,12 +39,12 @@ void btree_recorrer(BTree arbol, BTreeOrdenDeRecorrido orden,
                     FuncionVisitante visit);
 
 /**
- * : que retorne el n´umero de nodos del ´arbol
+ * : que retorne el número de nodos del árbol
  */
 int btree_nodos(BTree arbol);
 
 /**
- * : retorne 1 si el n´umero dado se encuentra en el ´arbol, y 0 en caso contrario
+ * : retorne 1 si el número dado se encuentra en el árbol, y 0 en caso contrario
  */
 
 int btree_buscar(BTree arbol, int dato);
@@ -60,14 +60,13 @@ BTree bree_copiar(BTree arbol);
 int btree_altura(BTree arbol);
 
 /**
- * retorna el n´umero de nodos que se encuentran a la profundidad
-dada.
+ * retorna el número de nodos que se encuentran a la profundidad dada.
  */
-
 int btree_nnodos_profundidad(BTree arbol, int lvlActual, int lvlDeseado);
+
 /**
  * que retorne la profundidad del nodo que contiene el n´umero dado, y -1 si el
- * n´umero no se encuentra en el ´arbol.
+ * número no se encuentra en el ´arbol.
  */
 int btree_profundidad(BTree arbol, int nro, int lvlActual);
 

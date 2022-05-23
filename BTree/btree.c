@@ -4,7 +4,8 @@
 #include <stdio.h>
 
 struct _BTNodo {
-  int dato;
+  int peso;
+  char caracter;
   struct _BTNodo *left;
   struct _BTNodo *right;
 };
