@@ -25,12 +25,17 @@ int main(int argc, char *argv[]){
     }
 
     //Calcular las frecuencias de cada caracter
-    for (int pos = 0; pos < (*len)-1; pos++){
+    for(int pos = 0; pos < (*len)-1; pos++){
         frecuencias[(int)buf[pos]]++;
     }
 
+    GList listaNodos = glist_crear();
+
     for(int index = 0; index < 256; index++){
-        printf("%d %d\n", index, frecuencias[index] );
+        BTree charTree = btree_crear();
+        charTree->caracter = index;
+        charTree->peso = frecuencias[index];
+        glist_agregar_inicio(listaNodos, charTree, copyBTree);
     }
 
     return 0;

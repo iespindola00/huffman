@@ -10,6 +10,15 @@ struct _BTNodo {
   struct _BTNodo *right;
 };
 
+/**
+ * Crea una copia física del Arbol.
+ */
+BTree *copyBTree(BTree *arbol) {
+  BTree *copia = btree_crear();
+  copia->peso = arbol->peso;
+  copia->caracter = arbol->caracter;
+  return copia;
+}
 
 /**
  * Devuelve un arbol vacío.
