@@ -13,8 +13,8 @@ struct _BTNodo {
 /**
  * Crea una copia física del Arbol.
  */
-BTree *copyBTree(BTree *arbol) {
-  BTree *copia = btree_crear();
+BTree copyBTree(BTree arbol) {
+  BTree copia = btree_crear();
   copia->peso = arbol->peso;
   copia->caracter = arbol->caracter;
   return copia;

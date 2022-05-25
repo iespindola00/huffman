@@ -2,7 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 #include "IO/io.h"
+#include "glist.h"
+#include "btree.h"
 
+// q hay en argv[0] ??
 int main(int argc, char *argv[]){
 
     if(argc != 3){
@@ -10,6 +13,7 @@ int main(int argc, char *argv[]){
         return 0;
     }
 
+    // la acción tiene q ser comprimir o descomprimir
     if(strcmp(argv[1],"C") && strcmp(argv[1],"D")){
         printf("Error en la accion a realizar\n");
         return 0;
