@@ -12,13 +12,18 @@ typedef struct _GBNode {
 
 typedef GBNode *GBList;
 
-typedef void (*FuncionDestructora)(void *dato);
+typedef void (*FuncionDestructora)(BTree dato);
 typedef void *(*FuncionCopia)(void *dato);
 typedef void (*FuncionVisitante)(void *dato);
 typedef int (*FuncionComparadora)(void *, void *);
 typedef int (*Predicado) (void *dato);
 
-GBList gblist_agregar_inicio(GBList list, void *data, FuncionCopia copy);
+/**
+ * agrega un elemento al inicio 
+ */
+void gblist_agregar_inicio(GBList list);
+
+void gblist_eliminar_inicio(GBList list);
 
 
 #endif /* __GBLIST_H__ */

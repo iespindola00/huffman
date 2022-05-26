@@ -38,7 +38,7 @@ int btree_empty(BTree nodo);
  * Crea un nuevo arbol, con el dato dado en el nodo raiz, y los subarboles dados
  * a izquierda y derecha.
  */
-BTree btree_unir(int dato, BTree left, BTree right);
+BTree btree_unir(BTree left, BTree right);
 
 /**
  * Recorrido del arbol, utilizando la funcion pasada.

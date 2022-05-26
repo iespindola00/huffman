@@ -43,10 +43,12 @@ int main(int argc, char *argv[]){
         BTree charTree = btree_crear();
         charTree->caracter = index;
         charTree->peso = frecuencias[index];
-        //gblist_agregar_inicio(listaNodos, charTree, copyBTree);     // copyBTree no esta definido
+        // gblist_agregar_inicio ya te crea la lista ordenada
+        // gblist_agregar_inicio(listaNodos, charTree, copyBTree);     // copyBTree no esta definido
     }
 
-    // con esta lista de nodos (arboles) vamos a formar un único Btree 
+    // con esta lista de nodos (arboles) vamos a formar un único Btree
+    // esto eliminando nodos  
 
 // ------------------------------------------------------------------------------------------------------------------------
     
