@@ -45,4 +45,12 @@ void glist_recorrer(GList lista, FuncionVisitante visitar);
 GList glist_filtrar(GList lista, FuncionCopia c, Predicado p);
 
 
+/**
+ * retorna el mínimo de la lista
+ */
+GList glist_minimo(GList arbol);
+
+
+
+
 #endif /* __GLIST_H__ */

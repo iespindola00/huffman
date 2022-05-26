@@ -2,8 +2,11 @@
 #include <stdio.h>
 #include <string.h>
 #include "IO/io.h"
-#include "glist.h"
+// #include "glist.h"
 #include "btree.h"
+#include "gblist.h"
+
+//----------------------------------------------------
 
 // q hay en argv[0] ??
 int main(int argc, char *argv[]){
@@ -33,14 +36,30 @@ int main(int argc, char *argv[]){
         frecuencias[(int)buf[pos]]++;
     }
 
-    GList listaNodos = glist_crear();
+    // frecuencias ordenadas
+                //ch //index
+    int frec_ord[256][256];
+    
+    int max = frecuencias[0];
+    
 
+    GBList listaNodos = NULL;
+    // esta lista NO esta ordenada (tiene orden alfabético)
     for(int index = 0; index < 256; index++){
         BTree charTree = btree_crear();
         charTree->caracter = index;
         charTree->peso = frecuencias[index];
-        glist_agregar_inicio(listaNodos, charTree, copyBTree);
+        //gblist_agregar_inicio(listaNodos, charTree, copyBTree);     // copyBTree no esta definido
     }
 
+    // con esta lista de nodos (arboles) vamos a formar un único Btree 
+
+// ------------------------------------------------------------------------------------------------------------------------
+    
+
+    for (int i = 0; i < 256; i++){
+        i++;
+    }
+    
     return 0;
 }

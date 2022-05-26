@@ -9,6 +9,14 @@ typedef enum {
   BTREE_RECORRIDO_POST
 } BTreeOrdenDeRecorrido;
 
+
+struct _BTNodo {
+  int caracter;
+  int peso;
+  struct _BTNodo *left;
+  struct _BTNodo *right;
+};
+
 typedef struct _BTNodo *BTree;
 
 /**
@@ -74,7 +82,6 @@ int btree_profundidad(BTree arbol, int nro, int lvlActual);
  * que retorne la suma total de los datos del ´arbol
  */
 int btree_sumar(BTree arbol);
-
 
 
 #endif /* __BTREE_H__ */

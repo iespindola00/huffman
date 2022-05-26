@@ -3,12 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-struct _BTNodo {
-  int caracter;
-  int peso;
-  struct _BTNodo *left;
-  struct _BTNodo *right;
-};
 
 /**
  * Crea una copia física del Arbol.

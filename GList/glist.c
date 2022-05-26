@@ -4,13 +4,13 @@
 #include <stdio.h>
 
 /**
- * Devuelve una lista vacía.
+ * Devuelve una lista vacï¿½a.
  */
 GList glist_crear() { return NULL; }
 
 /**
  * Destruccion de la lista.
- * destroy es una función que libera el dato almacenado.
+ * destroy es una funciï¿½n que libera el dato almacenado.
  */
 void glist_destruir(GList list, FuncionDestructora destroy) {
   GNode *nodeToDelete;
@@ -23,13 +23,13 @@ void glist_destruir(GList list, FuncionDestructora destroy) {
 }
 
 /**
- * Determina si la lista es vacía.
+ * Determina si la lista es vacï¿½a.
  */
 int glist_vacia(GList list) { return (list == NULL); }
 
 /**
  * Agrega un elemento al inicio de la lista.
- * copy es una función que retorna una copia física del dato.
+ * copy es una funciï¿½n que retorna una copia fï¿½sica del dato.
  */
 GList glist_agregar_inicio(GList list, void *data, FuncionCopia copy) {
   GNode *newNode = malloc(sizeof(GNode));
@@ -55,4 +55,8 @@ GList glist_filtrar(GList lista, FuncionCopia c, Predicado p){
     }
   }
   return nuevaLista;
+}
+
+GList glist_minimo(GList arbol){
+  
 }
