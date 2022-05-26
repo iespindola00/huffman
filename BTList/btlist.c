@@ -40,17 +40,3 @@ void btlist_eliminar_inicio(BTList list) {
     free(nodeToDelete);
   }
 }
-
-BTree arbol_huffman(BTList lista){
-  
-  BTree nodo1 = lista->arbol;
-  BTree nodo2 = lista->arbol->sig;
-
-  btlist_eliminar_inicio(lista);
-  btlist_eliminar_inicio(lista);
-
-  BTree nuevoNodo = btree_unir(nodo1, nodo2);
-
-  lista = btlist_agregar(lista, nuevoNodo);
-
-}

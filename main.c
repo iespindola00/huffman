@@ -43,3 +43,25 @@ int main(int argc, char *argv[]){
 
     return 0;
 }
+
+
+BTree arbol_huffman(BTList lista){
+
+    while (lista != NULL && lista->sig != NULL){
+        BTree nodo1 = lista->arbol;
+        BTree nodo2 = lista->sig->arbol;
+
+        btlist_eliminar_inicio(lista);
+        btlist_eliminar_inicio(lista);
+
+        BTree nuevoNodo = btree_unir(nodo1, nodo2);
+
+        lista = btlist_agregar(lista, nuevoNodo);
+    }
+
+    BTree arbol_final = lista->arbol;
+    btlist_eliminar_inicio(lista);
+    
+    return arbol_final;
+}
+
