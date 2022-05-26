@@ -17,6 +17,6 @@ typedef struct _BTNode {
 
 typedef BTNode *BTList;
 
-BTList btlist_agregar(BTList list, BTree arbol, FuncionCopia copy);
+BTList btlist_agregar(BTList list, BTree arbol);
 
 #endif /* __BTLIST_H__ */

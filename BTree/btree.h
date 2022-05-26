@@ -3,13 +3,6 @@
 
 typedef void (*FuncionVisitante)(int dato);
 
-typedef enum {
-  BTREE_RECORRIDO_IN,
-  BTREE_RECORRIDO_PRE,
-  BTREE_RECORRIDO_POST
-} BTreeOrdenDeRecorrido;
-
-
 struct _BTNodo {
   int caracter;
   int peso;
@@ -82,6 +75,7 @@ int btree_profundidad(BTree arbol, int nro, int lvlActual);
  * que retorne la suma total de los datos del ´arbol
  */
 int btree_sumar(BTree arbol);
+
 
 
 #endif /* __BTREE_H__ */
