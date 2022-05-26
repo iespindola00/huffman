@@ -1,10 +1,10 @@
 # Makefile para P3
 FLAGS = -Wall -Wextra -Werror -std=c99
 
-huff: main.o IO/io.o BTree/btree.o GList/glist.o
+huff: main.o IO/io.o BTree/btree.o BTList/btlist.o
 	$(CC) -o $@ $^ $(FLAGS)
 
-main.o: main.c IO/io.h BTree/btree.h GList/glist.h
+main.o: main.c IO/io.h BTree/btree.h BTList/btlist.h
 	$(CC) -c $< $(FLAGS)
 
 IO/io.o: IO/io.c IO/io.h
@@ -13,7 +13,7 @@ IO/io.o: IO/io.c IO/io.h
 BTree/btree.o: BTree/btree.c BTree/btree.h
 	$(CC) -c $< $(FLAGS)
 
-GList/glist.o: GList/glist.c GList/glist.h
+BTList/btlist.o: BTList/btlist.c BTList/btlist.h
 	$(CC) -c $< $(FLAGS)
 
 clean:
