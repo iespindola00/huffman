@@ -21,9 +21,16 @@ typedef int (*Predicado) (void *dato);
 /**
  * agrega un elemento al inicio 
  */
-void gblist_agregar_inicio(GBList list);
+void gblist_agregar_inicio(GBList list, BTree arbolAgregar);
 
+/**
+ * elimina un elemento del inicio
+ */
 void gblist_eliminar_inicio(GBList list);
 
-
+/**
+ * toma una lista de nodos de arboles ordenada
+ * y los va uniendo segun peso hasta armar el arbol de huffman
+ */
+void arbol_huffman(GBList lista);
 #endif /* __GBLIST_H__ */
