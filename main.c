@@ -35,12 +35,6 @@ int main(int argc, char *argv[]){
     for(int pos = 0; pos < (*len)-1; pos++){
         frecuencias[(int)buf[pos]]++;
     }
-
-    // frecuencias ordenadas
-                //ch //index
-    int frec_ord[256][256];
-    
-    int max = frecuencias[0];
     
 
     GBList listaNodos = NULL;
@@ -55,11 +49,6 @@ int main(int argc, char *argv[]){
     // con esta lista de nodos (arboles) vamos a formar un único Btree 
 
 // ------------------------------------------------------------------------------------------------------------------------
-    
-
-    for (int i = 0; i < 256; i++){
-        i++;
-    }
     
     return 0;
 }
