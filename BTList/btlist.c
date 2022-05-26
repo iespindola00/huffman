@@ -14,11 +14,11 @@ BTList btlist_agregar(BTList lista, BTree arbol) {
     return nuevoNodo;
   }
   
-  while( index->sig != NULL && arbol->peso > index->data->peso){
+  while( index->sig != NULL && arbol->peso > index->arbol->peso){
     index = index->sig;
   }
 
-  if( arbol->peso <= index->data->peso){  //Caso intermedio
+  if( arbol->peso <= index->arbol->peso){  //Caso intermedio
     nuevoNodo->ant = index->ant;
     nuevoNodo->sig = index;
     index->ant->sig = nuevoNodo;
