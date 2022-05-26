@@ -1,4 +1,3 @@
-# Makefile para P3
 FLAGS = -Wall -Wextra -Werror -std=c99
 
 huff: main.o IO/io.o BTree/btree.o BTList/btlist.o

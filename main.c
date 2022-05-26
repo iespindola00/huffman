@@ -2,9 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "IO/io.h"
-// #include "glist.h"
-#include "btree.h"
-#include "gblist.h"
+#include "BTree/btree.h"
+#include "BTList/btlist.h"
 
 //----------------------------------------------------
 
@@ -37,13 +36,13 @@ int main(int argc, char *argv[]){
     }
     
 
-    GBList listaNodos = NULL;
+    BTList listaNodos = NULL;
     // esta lista NO esta ordenada (tiene orden alfabético)
     for(int index = 0; index < 256; index++){
         BTree charTree = btree_crear();
         charTree->caracter = index;
         charTree->peso = frecuencias[index];
-        //gblist_agregar_inicio(listaNodos, charTree, copyBTree);     // copyBTree no esta definido
+        btlist_agregar(listaNodos, charTree);
     }
 
     // con esta lista de nodos (arboles) vamos a formar un único Btree 
