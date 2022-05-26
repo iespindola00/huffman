@@ -5,9 +5,6 @@
 #include "BTree/btree.h"
 #include "BTList/btlist.h"
 
-//----------------------------------------------------
-
-// q hay en argv[0] ??
 int main(int argc, char *argv[]){
 
     if(argc != 3){
@@ -24,33 +21,25 @@ int main(int argc, char *argv[]){
     int *len = malloc(sizeof(int));
     char *buf = readfile(argv[2], len);
 
-    //Inicializar arreglo con frecuencias
+    //Inicializa arreglo con frecuencias
     int frecuencias[256];
     for(int index = 0; index < 256; index++){
         frecuencias[index] = 0;
     }
 
-    //Calcular las frecuencias de cada caracter
+    //Calcula las frecuencias de cada caracter
     for(int pos = 0; pos < (*len)-1; pos++){
         frecuencias[(int)buf[pos]]++;
     }
-    
 
+    //Genero un BTree para cada caracter, y lo agrego ordenenado segun su peso a una BTList
     BTList listaNodos = NULL;
-    // esta lista NO esta ordenada (tiene orden alfabético)
     for(int index = 0; index < 256; index++){
         BTree charTree = btree_crear();
         charTree->caracter = index;
         charTree->peso = frecuencias[index];
         btlist_agregar(listaNodos, charTree);
     }
-
-    // con esta lista de nodos (arboles) vamos a formar un único Btree
-    // esto eliminando nodos
-
-// ------------------------------------------------------------------------------------------------------------------------
-    
-
 
     return 0;
 }
