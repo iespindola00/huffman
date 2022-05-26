@@ -35,10 +35,14 @@ int main(int argc, char *argv[]){
     //Genero un BTree para cada caracter, y lo agrego ordenenado segun su peso a una BTList
     BTList listaNodos = NULL;
     for(int index = 0; index < 256; index++){
-        BTree charTree = btree_crear();
-        charTree->caracter = index;
-        charTree->peso = frecuencias[index];
-        btlist_agregar(listaNodos, charTree);
+        BTree charTree = btree_crear(index, frecuencias[index]);
+        listaNodos = btlist_agregar(listaNodos, charTree);
+    }
+
+    BTList indexL = listaNodos;
+    while(indexL != NULL){
+        printf("index->arbol->caracter: %d, index->arbol->peso:%d\n", indexL->arbol->caracter, indexL->arbol->peso);
+        indexL = indexL->sig;
     }
 
     return 0;

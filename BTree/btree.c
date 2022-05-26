@@ -8,19 +8,16 @@ int max(int a, int b){
 }
 
 /**
- * Crea una copia física del Arbol.
- */
-BTree copyBTree(BTree arbol) {
-  BTree copia = btree_crear();
-  copia->peso = arbol->peso;
-  copia->caracter = arbol->caracter;
-  return copia;
-}
-
-/**
  * Devuelve un arbol vacío.
  */
-BTree btree_crear() { return NULL; }
+BTree btree_crear( int caracter, int peso ){
+  BTree nuevoTree = malloc(sizeof(BTNodo));
+  nuevoTree->caracter = caracter;
+  nuevoTree->peso = peso;
+  nuevoTree->left = NULL;
+  nuevoTree->right = NULL;
+  return nuevoTree;
+}
 
 /**
  * Destruccion del árbol.
@@ -43,7 +40,7 @@ int btree_empty(BTree nodo) { return nodo == NULL; }
  * a izquierda y derecha.
  */
 BTree btree_unir(BTree left, BTree right) {
-  BTree nuevoNodo = malloc(sizeof(struct _BTNodo));
+  BTree nuevoNodo = malloc(sizeof(BTNodo));
   assert(nuevoNodo != NULL);
   nuevoNodo->caracter = -1;
   nuevoNodo->left = left;

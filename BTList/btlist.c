@@ -13,12 +13,12 @@ BTList btlist_agregar(BTList lista, BTree arbol) {
     nuevoNodo->sig = NULL;
     return nuevoNodo;
   }
-  
+  //Avanzo hasta la posicion en donde debo insertar ( o hasta el final de la lista )
   while( index->sig != NULL && arbol->peso > index->arbol->peso){
     index = index->sig;
   }
 
-  if( arbol->peso <= index->arbol->peso){  //Caso intermedio
+  if( arbol->peso < index->arbol->peso ){  //Caso intermedio
     nuevoNodo->ant = index->ant;
     nuevoNodo->sig = index;
     index->ant->sig = nuevoNodo;
@@ -26,7 +26,7 @@ BTList btlist_agregar(BTList lista, BTree arbol) {
   } else {                                //Caso ultimo nodo
     nuevoNodo->sig = NULL;
     nuevoNodo->ant = index;
-    index->sig = nuevoNodo
+    index->sig = nuevoNodo;
   }
 
   return lista;

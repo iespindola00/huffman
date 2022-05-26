@@ -3,19 +3,19 @@
 
 typedef void (*FuncionVisitante)(int dato);
 
-struct _BTNodo {
+typedef struct _BTNodo {
   int caracter;
   int peso;
   struct _BTNodo *left;
   struct _BTNodo *right;
-};
+} BTNodo;
 
-typedef struct _BTNodo *BTree;
+typedef BTNodo *BTree;
 
 /**
- * Devuelve un arbol vacío.
+ * Devuelve un arbol con el peso y el Ascii pasado por argumento.
  */
-BTree btree_crear();
+BTree btree_crear( int caracter, int peso );
 
 /**
  * Destruccion del árbol.
