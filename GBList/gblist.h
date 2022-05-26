@@ -20,7 +20,5 @@ typedef int (*Predicado) (void *dato);
 
 GBList gblist_agregar_inicio(GBList list, void *data, FuncionCopia copy);
 
-// me devuelve el char con la menor frecuencia de una lista de arboles
-int gblist_minimo(GBList list);
 
 #endif /* __GBLIST_H__ */
