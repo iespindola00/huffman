@@ -1,6 +1,8 @@
 #ifndef __BTREE_H__
 #define __BTREE_H__
 
+typedef void (*FuncionVisitante)(int dato);
+
 struct _BTNodo {
   int caracter;
   int peso;
@@ -26,7 +28,7 @@ void btree_destruir(BTree nodo);
 int btree_empty(BTree nodo);
 
 /**
- * Crea un nuevo arbol, con el dato dado en el nodo raiz, y los subarboles dados
+ * Crea un nuevo arbol, y los subarboles dados
  * a izquierda y derecha.
  */
 BTree btree_unir(BTree left, BTree right);

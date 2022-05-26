@@ -45,9 +45,12 @@ int main(int argc, char *argv[]){
         btlist_agregar(listaNodos, charTree);
     }
 
-    // con esta lista de nodos (arboles) vamos a formar un único Btree 
+    // con esta lista de nodos (arboles) vamos a formar un único Btree
+    // esto eliminando nodos
 
 // ------------------------------------------------------------------------------------------------------------------------
     
+
+
     return 0;
 }
