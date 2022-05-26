@@ -39,13 +39,13 @@ int btree_empty(BTree nodo) { return nodo == NULL; }
  * Crea un nuevo arbol, con el caracter dado en el nodo raiz, y los subarboles dados
  * a izquierda y derecha.
  */
-BTree btree_unir(int caracter, BTree left, BTree right) {
+BTree btree_unir(BTree left, BTree right) {
   BTree nuevoNodo = malloc(sizeof(struct _BTNodo));
   assert(nuevoNodo != NULL);
   nuevoNodo->caracter = -1;
   nuevoNodo->left = left;
   nuevoNodo->right = right;
-  nuevoNodo->peso = left->right + right->peso;
+  nuevoNodo->peso = left->peso + right->peso;
   return nuevoNodo;
 }  
 
