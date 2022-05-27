@@ -48,17 +48,3 @@ BTree btree_unir(BTree left, BTree right) {
   nuevoNodo->peso = left->peso + right->peso;
   return nuevoNodo;
 }  
-
-int btree_sumar(BTree arbol){ 
-  if (btree_empty(arbol)){  // si vacio
-    return -1;
-  }
-  int suma =  arbol->caracter;
-  
-  if(!btree_empty(arbol->left))
-    suma += btree_sumar(arbol->left); 
-  if (!btree_empty(arbol->right))
-    suma += btree_sumar(arbol->right); 
-  
-  return suma;
-}

@@ -13,7 +13,7 @@ typedef struct _BTNodo {
 typedef BTNodo *BTree;
 
 /**
- * Devuelve un arbol con el peso y el Ascii pasado por argumento.
+ * Devuelve un arbol con el peso y el ASCII pasado por argumento.
  */
 BTree btree_crear( int caracter, int peso );
 
@@ -28,14 +28,8 @@ void btree_destruir(BTree nodo);
 int btree_empty(BTree nodo);
 
 /**
- * Crea un nuevo arbol, y los subarboles dados
- * a izquierda y derecha.
+ * Crea un nuevo arbol con los argumentos pasados como hijos
  */
 BTree btree_unir(BTree left, BTree right);
-
-/**
- * que retorne la suma total de los datos del ´arbol
- */
-int btree_sumar(BTree arbol);
 
 #endif /* __BTREE_H__ */
