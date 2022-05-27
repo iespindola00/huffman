@@ -12,6 +12,11 @@ typedef struct _BTNode {
 typedef BTNode *BTList;
 
 /**
+ * Recorre la lista imprimiendo caracter y peso
+ */
+void btlist_imprimir(BTList lista);
+
+/**
  * Agrega un elemento al inicio
  */
 BTList btlist_agregar(BTList list, BTree arbol);

@@ -3,7 +3,19 @@
 #include <stdio.h>
 #include "btlist.h"
 
+void btlist_imprimir(BTList lista){
+  printf("Lista\n");
+  if(lista != NULL){
+    BTList index = lista;
+    while( index != NULL){
+      printf("Caracter: %c , Peso: %d\n", index->arbol->caracter, index->arbol->peso);
+      index = index->sig;
+    }
+  }
+}
+
 BTList btlist_agregar(BTList lista, BTree arbol) {
+
   BTList nuevoNodo = malloc(sizeof(BTNode));
   BTList index = lista;
   nuevoNodo->arbol = arbol;
@@ -14,7 +26,7 @@ BTList btlist_agregar(BTList lista, BTree arbol) {
     return nuevoNodo;
   }
   //Avanzo hasta la posicion en donde debo insertar ( o hasta el final de la lista )
-  while( index->sig != NULL && arbol->peso > index->arbol->peso){
+  while( index->sig != NULL && arbol->peso >= index->arbol->peso){
     index = index->sig;
   }
 

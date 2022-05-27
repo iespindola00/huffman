@@ -12,7 +12,7 @@ int main(int argc, char *argv[]){
         return 0;
     }
 
-    // la acción tiene q ser comprimir o descomprimir
+    // Accion: 'C' para comprimir, 'D' para descomprimir
     if(strcmp(argv[1],"C") && strcmp(argv[1],"D")){
         printf("Error en la accion a realizar\n");
         return 0;
@@ -39,11 +39,7 @@ int main(int argc, char *argv[]){
         listaNodos = btlist_agregar(listaNodos, charTree);
     }
 
-    BTList indexL = listaNodos;
-    while(indexL != NULL){
-        printf("index->arbol->caracter: %d, index->arbol->peso:%d\n", indexL->arbol->caracter, indexL->arbol->peso);
-        indexL = indexL->sig;
-    }
+    btlist_imprimir(listaNodos);
 
     return 0;
 }
