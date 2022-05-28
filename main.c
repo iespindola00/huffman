@@ -5,6 +5,42 @@
 #include "BTree/btree.h"
 #include "BTList/btlist.h"
 
+char *comprimir_arbol( BTree arbol ){
+
+    char *buf = "";
+    if(arbol->caracter == -1){
+        strcat(buf, "0");
+        strcat(buf, comprimir_arbol(arbol->left));
+        strcat(buf, comprimir_arbol(arbol->right));
+    } else {
+        strcat(buf, "1");
+    }
+
+    return buf;
+}
+
+BTree arbol_huffman( BTList lista ){
+
+    while ( lista->sig->sig != NULL){
+        BTree nodo1 = lista->arbol;
+        BTree nodo2 = lista->sig->arbol;
+
+        lista = lista->sig->sig;
+        free(lista->ant->ant);
+        free(lista->ant);
+
+        BTree nuevoNodo = btree_unir(nodo1, nodo2);
+
+        lista = btlist_agregar(lista, nuevoNodo);
+    }
+
+    BTree arbol_final = btree_unir(lista->arbol, lista->sig->arbol);
+    free(lista->sig);
+    free(lista);
+
+    return arbol_final;
+}
+
 int main(int argc, char *argv[]){
 
     if(argc != 3){
@@ -39,29 +75,9 @@ int main(int argc, char *argv[]){
         listaNodos = btlist_agregar(listaNodos, charTree);
     }
 
-    btlist_imprimir(listaNodos);
+    BTree arbol = arbol_huffman(listaNodos);
+    btree_imprimir(arbol);
+    //printf("Arbol final:%s\n", comprimir_arbol(arbol));
 
     return 0;
 }
-
-
-BTree arbol_huffman(BTList lista){
-
-    while (lista != NULL && lista->sig != NULL){
-        BTree nodo1 = lista->arbol;
-        BTree nodo2 = lista->sig->arbol;
-
-        btlist_eliminar_inicio(lista);
-        btlist_eliminar_inicio(lista);
-
-        BTree nuevoNodo = btree_unir(nodo1, nodo2);
-
-        lista = btlist_agregar(lista, nuevoNodo);
-    }
-
-    BTree arbol_final = lista->arbol;
-    btlist_eliminar_inicio(lista);
-    
-    return arbol_final;
-}
-

@@ -18,7 +18,7 @@ typedef BTNodo *BTree;
 BTree btree_crear( int caracter, int peso );
 
 /**
- * Destruccion del árbol.
+ * Destruye del árbol.
  */
 void btree_destruir(BTree nodo);
  
@@ -31,5 +31,10 @@ int btree_empty(BTree nodo);
  * Crea un nuevo arbol con los argumentos pasados como hijos
  */
 BTree btree_unir(BTree left, BTree right);
+
+/**
+ * Imprime un arbol
+ */
+void btree_imprimir(BTree arbol);
 
 #endif /* __BTREE_H__ */
