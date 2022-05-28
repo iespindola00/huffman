@@ -3,13 +3,6 @@
 #include <stdio.h>
 #include "btree.h"
 
-int max(int a, int b){
-  return a > b ? a : b;
-}
-
-/**
- * Devuelve un arbol vacío.
- */
 BTree btree_crear( int caracter, int peso ){
   BTree nuevoTree = malloc(sizeof(BTNodo));
   nuevoTree->caracter = caracter;
@@ -19,9 +12,6 @@ BTree btree_crear( int caracter, int peso ){
   return nuevoTree;
 }
 
-/**
- * Destruccion del árbol.
- */
 void btree_destruir(BTree nodo) {
   if (nodo != NULL) {
     btree_destruir(nodo->left);
@@ -30,15 +20,8 @@ void btree_destruir(BTree nodo) {
   }
 }
 
-/**
- * Indica si el árbol es vacío.
- */
 int btree_empty(BTree nodo) { return nodo == NULL; }
 
-/**
- * Crea un nuevo arbol, con el caracter dado en el nodo raiz, y los subarboles dados
- * a izquierda y derecha.
- */
 BTree btree_unir(BTree left, BTree right) {
   BTree nuevoNodo = malloc(sizeof(BTNodo));
   assert(nuevoNodo != NULL);
@@ -48,3 +31,14 @@ BTree btree_unir(BTree left, BTree right) {
   nuevoNodo->peso = left->peso + right->peso;
   return nuevoNodo;
 }  
+
+void btree_imprimir(BTree arbol){
+  if(arbol->caracter == -1){
+    //printf("Left\n");
+    btree_imprimir(arbol->left);
+    //printf("Right\n");
+    btree_imprimir(arbol->right);
+  } else {
+    printf("%d\n", arbol->caracter);
+  }
+}

@@ -26,5 +26,4 @@ BTList btlist_agregar(BTList list, BTree arbol);
  */
 void btlist_eliminar_inicio(BTList list);
 
-
 #endif /* __BTLIST_H__ */
