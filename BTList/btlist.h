@@ -26,9 +26,5 @@ BTList btlist_agregar(BTList list, BTree arbol);
  */
 void btlist_eliminar_inicio(BTList list);
 
-/**
- * Genera el arbol de huffman y retorna la raiz
- */
-BTree arbol_huffman(BTList lista);
 
 #endif /* __BTLIST_H__ */

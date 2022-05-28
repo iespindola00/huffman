@@ -5,6 +5,32 @@
 #include "BTree/btree.h"
 #include "BTList/btlist.h"
 
+
+//  Genera el arbol de huffman con la lista de arboles pasada y retorna la raiz
+BTree arbol_huffman(BTList lista){
+    while (lista != NULL && lista->sig != NULL){
+
+        BTree nodo1 = lista->arbol;
+        //BTree nodo2 = lista->sig->arbol;
+        btlist_eliminar_inicio(lista);
+        BTree nodo2 = lista->arbol;
+        btlist_eliminar_inicio(lista);
+        
+        printf("nodo1 caracter: %c, peso: %d\n\n", nodo1->caracter, nodo1->peso);
+        printf("nodo2 caracter: %c, peso: %d\n\n", nodo2->caracter, nodo2->peso);
+
+        BTree nuevoNodo = btree_unir(nodo1, nodo2);
+
+        lista = btlist_agregar(lista, nuevoNodo);
+    }
+
+    BTree arbol_final = lista->arbol;
+    btlist_eliminar_inicio(lista);
+    
+    return arbol_final;
+}
+
+
 int main(int argc, char *argv[]){
 
     if(argc != 3){
@@ -39,29 +65,10 @@ int main(int argc, char *argv[]){
         listaNodos = btlist_agregar(listaNodos, charTree);
     }
 
-    btlist_imprimir(listaNodos);
+    //btlist_imprimir(listaNodos);
+
+    arbol_huffman(listaNodos);
+
 
     return 0;
 }
-
-
-BTree arbol_huffman(BTList lista){
-
-    while (lista != NULL && lista->sig != NULL){
-        BTree nodo1 = lista->arbol;
-        BTree nodo2 = lista->sig->arbol;
-
-        btlist_eliminar_inicio(lista);
-        btlist_eliminar_inicio(lista);
-
-        BTree nuevoNodo = btree_unir(nodo1, nodo2);
-
-        lista = btlist_agregar(lista, nuevoNodo);
-    }
-
-    BTree arbol_final = lista->arbol;
-    btlist_eliminar_inicio(lista);
-    
-    return arbol_final;
-}
-

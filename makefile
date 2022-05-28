@@ -1,4 +1,5 @@
-FLAGS = -Wall -Wextra -Werror -std=c99
+FLAGS = -Wall -Wextra -Werror -std=c99 -Os
+CC = gcc
 
 huff: main.o io.o btree.o btlist.o
 	$(CC) -o $@ $^ $(FLAGS)

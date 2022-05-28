@@ -4,7 +4,7 @@
 #include "btlist.h"
 
 void btlist_imprimir(BTList lista){
-  printf("Lista\n");
+  printf("Lista:\n");
   if(lista != NULL){
     BTList index = lista;
     while( index != NULL){
@@ -48,7 +48,10 @@ void btlist_eliminar_inicio(BTList list) {
   BTNode *nodeToDelete;
   if(list != NULL) {
     nodeToDelete = list;
+    //printf("estamos eliminando este nodo que contiene esta raiz: arbol->caracter: %c, arbol->peso: %d", nodeToDelete->arbol->caracter, nodeToDelete->arbol->peso);
     list = list->sig;
+    //printf("ahora la lista parte de esta raiz: arbol->caracter: %c, arbol->peso: %d", list->arbol->caracter, list->arbol->peso);
+
     free(nodeToDelete);
   }
 }
