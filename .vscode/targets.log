@@ -7,7 +7,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Sat May 28 02:43:35 2022
+# Make data base, printed on Sun May 29 17:49:15 2022
 
 # Variables
 
@@ -59,9 +59,9 @@ PROGRAMW6432 = C:\Program Files
 # environment
 PROGRAMDATA = C:\ProgramData
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-eb55b62b-a254-40ad-b79e-0996dd843614-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-e3d67e5c-10bf-4e67-9d7d-f34e8e0b8759-sock
 # environment
-VSCODE_CWD = C:\Users\PC\Desktop\Facultad\Estructuras de datos y algoritmos I\p1 resoluci�n
+VSCODE_CWD = C:\Users\PC\AppData\Local\Programs\Microsoft VS Code
 # environment
 PATH = C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\PC\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\PC\AppData\Local\Programs\Python\Python310\;C:\Users\PC\AppData\Local\Microsoft\WindowsApps;C:\Users\PC\AppData\Local\Programs\Microsoft VS Code\bin;C:\MinGW\bin;
 # environment
@@ -83,7 +83,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_2420_WGPCSZEIQTNHZVHP
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5780_FGVVGIDBAEOWUCXH
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -195,8 +195,7 @@ PROCESSOR_REVISION = 5000
 # environment
 VBOX_HWVIRTEX_IGNORE_SVM_IN_USE = 1
 # default
-.RECIPEPR 
-EFIX := 
+.RECIPEPREFIX := 
 # environment
 LANG = C
 # environment
@@ -204,7 +203,7 @@ PROCESSOR_LEVEL = 25
 # environment
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
-VSCODE_PID = 2420
+VSCODE_PID = 5780
 # environment
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-FPDJKD9
 # variable set hash-table stats:
@@ -218,16 +217,16 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-FPDJKD9
 
 # C:\ProgramData\Oracle\Java\javapath (key C:/ProgramData/Oracle/Java/javapath, mtime 1648587889): 5 files, no impossibilities.
 # C:\WINDOWS\System32\WindowsPowerShell\v1.0\ (key C:/WINDOWS/System32/WindowsPowerShell/v1.0/, mtime 1648311620): 32 files, no impossibilities.
-# . (key c:/Users/PC/huffman, mtime 1653715312): 17 files, no impossibilities.
+# . (key c:/Users/PC/huffman, mtime 1653764716): 17 files, no impossibilities.
 # C:\Program Files\Git\cmd (key C:/Program Files/Git/cmd, mtime 1653258951): 8 files, no impossibilities.
 # C:\WINDOWS\System32\OpenSSH\: could not be stat'd.
 # C:\MinGW\bin (key C:/MinGW/bin, mtime 1653695075): 54 files, no impossibilities.
 # C:\WINDOWS (key C:/WINDOWS, mtime 1652407519): 113 files, no impossibilities.
 # C:\WINDOWS\System32\Wbem (key C:/WINDOWS/System32/Wbem, mtime 1652407520): 173 files, no impossibilities.
 # C:\Users\PC\AppData\Local\Microsoft\WindowsApps (key C:/Users/PC/AppData/Local/Microsoft/WindowsApps, mtime 1653405381): 11 files, no impossibilities.
-# C:\WINDOWS\system32 (key C:/WINDOWS/system32, mtime 1653458233): 2975 files, no impossibilities.
-# C:\Users\PC\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/PC/AppData/Local/Programs/Micros 
-oft VS Code/bin, mtime 1652912557): 4 files, no impossibilities.
+# C:\WINDOWS\system32 (key C:/WINDOWS/system32, mtime 1653844025): 2975 files, no impossibilities.
+# C:\Users\PC\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/PC/AppData/Local/Programs/Microsoft VS Code/bin, mtime 165 
+2912557): 4 files, no impossibilities.
 # C:\Users\PC\AppData\Local\Programs\Python\Python310\ (key C:/Users/PC/AppData/Local/Programs/Python/Python310/, mtime 1648302271): 18 files, no impossibilities.
 # C:\Users\PC\AppData\Local\Programs\Python\Python310\Scripts\ (key C:/Users/PC/AppData/Local/Programs/Python/Python310/Scripts/, mtime 1653372106): 10 files, no impossibilities.
 
@@ -359,16 +358,15 @@ IO/io.c:
 # No general ('VPATH' variable) search path.
 
 # strcache buffers: 7 (6) / strings = 3397 / storage = 51036 B / avg = 15 B
-# current bu 
-make.exe: *** No rule to make target 'all'.  Stop.
-
-f: size = 8174 B / used = 2027 B / count = 131 / avg = 15 B
+# current buf: size = 8174 B / used = 2027 B / count = 131 / avg = 15 B
 # other used: total = 42862 B / count = 3266 / avg = 13 B
 # other free: total = 35 B / max = 11 B / min = 2 B / avg = 5 B
 
 # strcache performance: lookups = 3465 / hit rate = 1%
 # hash-table stats:
 # Load=3397/8192=41%, Rehash=0, Collisions=1152/3465=33%
-# Finished Make data base on Sat May 28 02:43:35 2022
+# Finished Make data base on Sun May 29 17:49:15 2022
 
  
+make.exe: *** No rule to make target 'all'.  Stop.
+

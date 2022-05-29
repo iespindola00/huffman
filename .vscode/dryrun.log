@@ -3,6 +3,7 @@ make.exe: Entering directory 'c:/Users/PC/huffman'
 gcc -c main.c -Wall -Wextra -Werror -std=c99 -Os
  
 gcc -c IO/io.c -Wall -Wextra -Werror -std=c99 -Os
+ 
 gcc -c BTree/btree.c -Wall -Wextra -Werror -std=c99 -Os
  
 gcc -c BTList/btlist.c -Wall -Wextra -Werror -std=c99 -Os
