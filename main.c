@@ -7,7 +7,7 @@
 
 struct ArrayWrapper
 {
-    char buf[1000];
+    char buf[100];
 };
 
 
@@ -16,12 +16,9 @@ void codificacion_aux_arbol(BTree arbol, char** codificacion, struct ArrayWrappe
     
     // si es nodo
     if (arbol->caracter == -1){
-        // tengo un problema con el buf, se pasa por referencia
         // agrego un solo char
         arrWrapper.buf[strlen(arrWrapper.buf)] = nro;
         arrWrapper.buf[strlen(arrWrapper.buf) + 1] = '\0';
-
-        printf("buf (nodo): %s     ", arrWrapper.buf);
         // recursion
         codificacion_aux_arbol(arbol->left, codificacion, arrWrapper, '0');
         codificacion_aux_arbol(arbol->right, codificacion, arrWrapper, '1');
@@ -29,15 +26,13 @@ void codificacion_aux_arbol(BTree arbol, char** codificacion, struct ArrayWrappe
     // si es hoja
     else{
         // agrego un solo char
-        if(strlen(arrWrapper.buf) + 1 >= 1000) { printf("error: el buf es demasiado pequeño"); }   
+        if(strlen(arrWrapper.buf) + 1 >= 100) { printf("error: el buf es demasiado pequeño"); }
         else {
             arrWrapper.buf[strlen(arrWrapper.buf)] = nro;
             arrWrapper.buf[strlen(arrWrapper.buf) + 1] = '\0';
-            printf("buf (hoja): %s     ", arrWrapper.buf);
         }
         codificacion[arbol->caracter] = malloc(sizeof(char) * strlen(arrWrapper.buf) + 1);
         strcpy(codificacion[arbol->caracter], arrWrapper.buf);   // si ya terminó el camino hasta la hoja, le asigno su codificacion (buf) / atoi me parsea el buf a int
-        printf("\ncodificación final hoja: %s \n", codificacion[arbol->caracter]);
     }
 }
 
@@ -46,16 +41,11 @@ void codificacion_arbol(BTree arbol, char** codificacion){
     arrWrapper.buf[0] = '\0';  // lo inicializamos
     codificacion_aux_arbol(arbol->left, codificacion, arrWrapper, '0');
     codificacion_aux_arbol(arbol->right, codificacion, arrWrapper, '1');
-    printf("\nllegamos al final, ya codificamos todo\n\n");
 }
 
-
-
-
-/*
 char *comprimir_arbol( BTree arbol ){
 
-    char *buf;
+    char *buf = malloc(100000*sizeof(char));
     if(arbol->caracter == -1){
         strcat(buf, "0");
         strcat(buf, comprimir_arbol(arbol->left));
@@ -66,7 +56,6 @@ char *comprimir_arbol( BTree arbol ){
 
     return buf;
 }
-*/
 
 BTree arbol_huffman(BTList lista){
 
@@ -77,9 +66,8 @@ BTree arbol_huffman(BTList lista){
         lista = lista->sig->sig;
         free(lista->ant->ant);
         free(lista->ant);
-
+        lista->ant = NULL;
         BTree nuevoNodo = btree_unir(nodo1, nodo2);
-
         lista = btlist_agregar(lista, nuevoNodo);
     }
 
@@ -88,6 +76,14 @@ BTree arbol_huffman(BTList lista){
     free(lista);
 
     return arbol_final;
+}
+
+char* compresion(char** codificacion, char* texto, int* len){
+    char* codificacion_final = malloc(sizeof(char)*100000);
+    for (int i = 0; i < *len; ++i){
+        strcat(codificacion_final, codificacion[(unsigned char)texto[i]]);
+    }
+    return codificacion_final;
 }
 
 int main(int argc, char *argv[]){
@@ -104,7 +100,8 @@ int main(int argc, char *argv[]){
     }
 
     int *len = malloc(sizeof(int));
-    char *buf = readfile(argv[2], len);
+    char *path = argv[2];
+    char *buf = readfile(path, len);
 
     //Inicializa arreglo con frecuencias
     int frecuencias[256];
@@ -126,15 +123,20 @@ int main(int argc, char *argv[]){
 
     BTree arbol = arbol_huffman(listaNodos);
 
-    // creo arreglo para agregar los pares  char : codificación
+    //Arreglo para agregar los pares [char : codificación]
     char** codificacion = malloc(sizeof(char*) * 256);
     codificacion_arbol(arbol, codificacion);
 
-    for (int i = 0; i < 256; i++){
-        printf("índice: %d codificación: %s\n", i, codificacion[i]);
-    }
-    
-    
+    int *newLenSerializacion = malloc(sizeof(int));
+    char *hexa_arbol = implode(comprimir_arbol(arbol), *len, newLenSerializacion);
 
+    char *treePath = malloc(sizeof(char)*100);
+    treePath = strcat(treePath, path);
+    treePath = strcat(treePath, ".tree");
+    writefile(treePath, hexa_arbol, *newLenSerializacion);
+
+    int *newLen = malloc(sizeof(int));
+    char *hexa = implode(compresion(codificacion, buf, len), *len, newLen);
+    writefile(strcat(path, ".hf"), hexa, *newLen);
     return 0;
 }

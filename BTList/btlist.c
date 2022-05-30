@@ -8,7 +8,7 @@ void btlist_imprimir(BTList lista){
   if(lista != NULL){
     BTList index = lista;
     while( index != NULL){
-      printf("Caracter: %c , Peso: %d\n", index->arbol->caracter, index->arbol->peso);
+      printf("Caracter: %d , Peso: %d\n", index->arbol->caracter, index->arbol->peso);
       index = index->sig;
     }
   }
@@ -33,8 +33,13 @@ BTList btlist_agregar(BTList lista, BTree arbol) {
   if( arbol->peso < index->arbol->peso ){  //Caso intermedio
     nuevoNodo->ant = index->ant;
     nuevoNodo->sig = index;
-    index->ant->sig = nuevoNodo;
+    if(index->ant != NULL){
+      index->ant->sig = nuevoNodo;
+    }
     index->ant = nuevoNodo;
+    if(nuevoNodo->ant == NULL){
+      return nuevoNodo;
+    }
   } else {                                //Caso ultimo nodo
     nuevoNodo->sig = NULL;
     nuevoNodo->ant = index;
