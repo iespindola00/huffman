@@ -15,9 +15,11 @@ btree.o: BTree/btree.c BTree/btree.h
 
 btlist.o: BTList/btlist.c BTList/btlist.h
 	$(CC) -c $< $(FLAGS)
+	
 
 clean:
 	rm *.o
 	rm huff
+
 
 .PHONY = clean

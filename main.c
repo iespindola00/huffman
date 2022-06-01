@@ -11,13 +11,13 @@ struct ArrayWrapper
 };
 
 
-// NOTA: NRO es un caracter "1" || "0"
-void codificacion_aux_arbol(BTree arbol, char** codificacion, struct ArrayWrapper arrWrapper, char nro){
+// NOTA: bit es un caracter "1" || "0"
+void codificacion_aux_arbol(BTree arbol, char** codificacion, struct ArrayWrapper arrWrapper, char bit){
     
     // si es nodo
     if (arbol->caracter == -1){
         // agrego un solo char
-        arrWrapper.buf[strlen(arrWrapper.buf)] = nro;
+        arrWrapper.buf[strlen(arrWrapper.buf)] = bit;
         arrWrapper.buf[strlen(arrWrapper.buf) + 1] = '\0';
         // recursion
         codificacion_aux_arbol(arbol->left, codificacion, arrWrapper, '0');
@@ -26,9 +26,9 @@ void codificacion_aux_arbol(BTree arbol, char** codificacion, struct ArrayWrappe
     // si es hoja
     else{
         // agrego un solo char
-        if(strlen(arrWrapper.buf) + 1 >= 100) { printf("error: el buf es demasiado pequeño"); }
+        if(strlen(arrWrapper.buf) + 1 >= 100) { printf("error: el tamaño buf es demasiado pequeño"); }
         else {
-            arrWrapper.buf[strlen(arrWrapper.buf)] = nro;
+            arrWrapper.buf[strlen(arrWrapper.buf)] = bit;
             arrWrapper.buf[strlen(arrWrapper.buf) + 1] = '\0';
         }
         codificacion[arbol->caracter] = malloc(sizeof(char) * strlen(arrWrapper.buf) + 1);
@@ -43,6 +43,7 @@ void codificacion_arbol(BTree arbol, char** codificacion){
     codificacion_aux_arbol(arbol->right, codificacion, arrWrapper, '1');
 }
 
+// retorna cadena de '1' y '0' con forma del arbol
 char *comprimir_arbol( BTree arbol ){
 
     char *buf = malloc(100000*sizeof(char));
@@ -78,6 +79,7 @@ BTree arbol_huffman(BTList lista){
     return arbol_final;
 }
 
+// retorna string de bits q es la codificación del texto dado
 char* compresion(char** codificacion, char* texto, int* len){
     char* codificacion_final = malloc(sizeof(char)*100000);
     for (int i = 0; i < *len; ++i){
@@ -85,6 +87,69 @@ char* compresion(char** codificacion, char* texto, int* len){
     }
     return codificacion_final;
 }
+
+
+// ============================= parsear arbol ================================
+
+BTree parsear_aux_arbol(BTree arbol_ser, char* serializacion_forma, int* cont){ 
+    if(*cont >= 512){
+        printf("se pasa de 512 chars");
+        return;
+    }
+    
+    // es un nodo
+    if (serializacion_forma[*cont] == '0'){
+        arbol_ser->left = btree_crear(NULL, NULL);
+        *cont += 1;
+        parsear_aux_arbol(arbol_ser->left, serializacion_forma, cont);
+        *cont += 1;
+        parsear_aux_arbol(arbol_ser->left, serializacion_forma, cont);
+    }
+    // es una hoja
+    else if(serializacion_forma[*cont] == '1'){
+        return; //??
+    }
+    else{
+        printf("el archivo tiene un char que no es ni '0' ni '1', precisamente: %c", serializacion_forma[*cont]);
+    }
+    // arbol (sin datos)
+    return arbol_ser;
+}
+
+
+// rearma un arbol desde su serialización (solo la forma)
+BTree parsear_arbol(char* arch){ 
+    int* len_serializacion = malloc(sizeof(int));
+    // todo el arch de serialización
+    char* serializacion = readfile(arch, len_serializacion);
+    // solamente la parte de la forma del arbol
+    char* serializacion_forma;
+    for (int i = 0; i < 512; i++){
+        serializacion_forma[i] = serializacion[i];
+    }
+
+    BTree arbol_ser = btree_crear(NULL, NULL);
+    int* cont = malloc(sizeof(int));
+    
+    return parsear_aux_arbol(arbol_ser, serializacion_forma, cont);
+
+}
+    
+// =========================== parsear hojas ===============================
+
+BTree parsear_hojas(BTree arbol_forma, ){
+
+}
+
+
+
+
+
+
+
+
+
+
 
 int main(int argc, char *argv[]){
 
@@ -100,7 +165,7 @@ int main(int argc, char *argv[]){
     }
 
     int *len = malloc(sizeof(int));
-    char *path = argv[2];
+    char *path = argv[2];   // path: nombre del archivo
     char *buf = readfile(path, len);
 
     //Inicializa arreglo con frecuencias
@@ -123,20 +188,32 @@ int main(int argc, char *argv[]){
 
     BTree arbol = arbol_huffman(listaNodos);
 
-    //Arreglo para agregar los pares [char : codificación]
+    //Arreglo para agregar los pares |char : codificación|
     char** codificacion = malloc(sizeof(char*) * 256);
     codificacion_arbol(arbol, codificacion);
 
-    int *newLenSerializacion = malloc(sizeof(int));
-    char *hexa_arbol = implode(comprimir_arbol(arbol), *len, newLenSerializacion);
+    // =================== serialización ===================
 
+    int *newLenSerializacion = malloc(sizeof(int));
+    // implode transforma bits a chars (bytes con padding)
+    //                          // bits         longitud bits  nueva len
+    char *hexa_arbol = implode(comprimir_arbol(arbol), *len, newLenSerializacion);
+    
+
+    //treePath = nombredelarchivo + .tree
     char *treePath = malloc(sizeof(char)*100);
     treePath = strcat(treePath, path);
-    treePath = strcat(treePath, ".tree");
-    writefile(treePath, hexa_arbol, *newLenSerializacion);
+    treePath = strcat(treePath, ".tree");    //.tree
+    //en el archivo de path:treePath escribir hexa_arbol de len newLenS
+    writefile(treePath, hexa_arbol, *newLenSerializacion);    // serialización del arbol
+
 
     int *newLen = malloc(sizeof(int));
     char *hexa = implode(compresion(codificacion, buf, len), *len, newLen);
-    writefile(strcat(path, ".hf"), hexa, *newLen);
+    writefile(strcat(path, ".hf"), hexa, *newLen);  // texto comprimido   .hf
+    
+    BTree arbol_ser = parsear_arbol(hexa_arbol);
+
     return 0;
+    
 }
