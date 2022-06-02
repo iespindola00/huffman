@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "btree.h"
 
-BTree btree_crear( int caracter, int peso ){
+BTree btreeCrear( int caracter, int peso ){
   BTree nuevoTree = malloc(sizeof(BTNodo));
   nuevoTree->caracter = caracter;
   nuevoTree->peso = peso;
@@ -12,17 +12,15 @@ BTree btree_crear( int caracter, int peso ){
   return nuevoTree;
 }
 
-void btree_destruir(BTree nodo) {
+void btreeDestruir(BTree nodo) {
   if (nodo != NULL) {
-    btree_destruir(nodo->left);
-    btree_destruir(nodo->right);
+    btreeDestruir(nodo->left);
+    btreeDestruir(nodo->right);
     free(nodo);
   }
 }
 
-int btree_empty(BTree nodo) { return nodo == NULL; }
-
-BTree btree_unir(BTree left, BTree right) {
+BTree btreeUnir(BTree left, BTree right) {
   BTree nuevoNodo = malloc(sizeof(BTNodo));
   assert(nuevoNodo != NULL);
   nuevoNodo->caracter = -1;
@@ -32,12 +30,12 @@ BTree btree_unir(BTree left, BTree right) {
   return nuevoNodo;
 }  
 
-void btree_imprimir(BTree arbol){
+void btreeImprimir(BTree arbol){
   if(arbol->caracter == -1){
     printf("Left:\n");
-    btree_imprimir(arbol->left);
+    btreeImprimir(arbol->left);
     printf("Right:\n");
-    btree_imprimir(arbol->right);
+    btreeImprimir(arbol->right);
   } else {
     printf("%c\n", arbol->caracter);
   }

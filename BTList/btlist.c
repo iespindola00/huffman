@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "btlist.h"
 
-void btlist_imprimir(BTList lista){
+void btlistImprimir(BTList lista){
   printf("Lista:\n");
   if(lista != NULL){
     BTList index = lista;
@@ -14,7 +14,7 @@ void btlist_imprimir(BTList lista){
   }
 }
 
-BTList btlist_agregar(BTList lista, BTree arbol) {
+BTList btlistAgregar(BTList lista, BTree arbol) {
 
   BTList nuevoNodo = malloc(sizeof(BTNode));
   BTList index = lista;
@@ -47,16 +47,4 @@ BTList btlist_agregar(BTList lista, BTree arbol) {
   }
 
   return lista;
-}
-
-void btlist_eliminar_inicio(BTList list) {
-  BTNode *nodeToDelete;
-  if(list != NULL) {
-    nodeToDelete = list;
-    //printf("estamos eliminando este nodo que contiene esta raiz: arbol->caracter: %c, arbol->peso: %d", nodeToDelete->arbol->caracter, nodeToDelete->arbol->peso);
-    list = list->sig;
-    //printf("ahora la lista parte de esta raiz: arbol->caracter: %c, arbol->peso: %d", list->arbol->caracter, list->arbol->peso);
-
-    free(nodeToDelete);
-  }
 }

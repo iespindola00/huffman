@@ -15,26 +15,21 @@ typedef BTNodo *BTree;
 /**
  * Devuelve un arbol con el peso y el ASCII pasado por argumento.
  */
-BTree btree_crear( int caracter, int peso );
+BTree btreeCrear( int caracter, int peso );
 
 /**
  * Destruye del árbol.
  */
-void btree_destruir(BTree nodo);
- 
-/**
- * Indica si el árbol es vacío.
- */
-int btree_empty(BTree nodo);
+void btreeDestruir(BTree nodo);
 
 /**
  * Crea un nuevo arbol con los argumentos pasados como hijos
  */
-BTree btree_unir(BTree left, BTree right);
+BTree btreeUnir(BTree left, BTree right);
 
 /**
  * Imprime un arbol
  */
-void btree_imprimir(BTree arbol);
+void btreeImprimir(BTree arbol);
 
 #endif /* __BTREE_H__ */
