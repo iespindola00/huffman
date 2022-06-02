@@ -18,6 +18,7 @@ btlist.o: BTList/btlist.c BTList/btlist.h
 
 clean:
 	rm *.o
+	rm *.tree
+	rm *.hf
 	rm huff
-
 .PHONY = clean

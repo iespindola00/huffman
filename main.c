@@ -43,21 +43,7 @@ void codificacion_arbol(BTree arbol, char** codificacion){
     codificacion_aux_arbol(arbol->right, codificacion, arrWrapper, '1');
 }
 
-char *comprimir_arbol( BTree arbol ){
-
-    char *buf = malloc(100000*sizeof(char));
-    if(arbol->caracter == -1){
-        strcat(buf, "0");
-        strcat(buf, comprimir_arbol(arbol->left));
-        strcat(buf, comprimir_arbol(arbol->right));
-    } else {
-        strcat(buf, "1");
-    }
-
-    return buf;
-}
-
-BTree arbol_huffman(BTList lista){
+BTree arbolHuffman(BTList lista){
 
     while ( lista->sig->sig != NULL){
         BTree nodo1 = lista->arbol;
@@ -78,12 +64,76 @@ BTree arbol_huffman(BTList lista){
     return arbol_final;
 }
 
-char* compresion(char** codificacion, char* texto, int* len){
-    char* codificacion_final = malloc(sizeof(char)*100000);
-    for (int i = 0; i < *len; ++i){
-        strcat(codificacion_final, codificacion[(unsigned char)texto[i]]);
+char *serializarForma( BTree arbol ){
+    char *buf = malloc(100000*sizeof(char));
+    if(arbol->caracter == -1){
+        strcat(buf, "0");
+        strcat(buf, serializarForma(arbol->left));
+        strcat(buf, serializarForma(arbol->right));
+    } else {
+        strcat(buf, "1");
     }
-    return codificacion_final;
+
+    return buf;
+}
+
+char *serializarHojas( BTree arbol ){
+    char *buf = malloc(100000*sizeof(char));
+
+    if(arbol->left != NULL){
+        strcat(buf, serializarHojas(arbol->left));
+    }
+
+    if(arbol->caracter != -1){
+        char hex[10];
+        sprintf( hex, "%c", arbol->caracter);
+        strcat(buf, hex);
+    }
+
+    if(arbol->right != NULL){
+        strcat(buf, serializarHojas(arbol->right));
+    }
+
+    return buf;
+}
+
+char *serializar( BTree arbol ){
+    //Creo un char puntero donde almacenaré la serializacion
+    char *buf = malloc(sizeof(char)*1000);
+
+    //Creo un int puntero en donde almacenar el largo de la serializacion de la forma.
+    int *auxLen = malloc(sizeof(int));
+
+    //Obtengo el binario de la serializacion de la forma
+    char *serializacionFormaRaw = serializarForma(arbol);
+    //Lo transformo en chars
+    char *serializacionForma = implode(serializacionFormaRaw, strlen(serializacionFormaRaw), auxLen);
+
+    //Obtengo la serializacion de las hojas (ya en chars)
+    char *serializacionHojas = serializarHojas(arbol);
+
+    //Guardo ambas partes en el buf a retornar
+    strcat(buf, serializacionHojas);
+    strcat(buf, serializacionForma);
+
+    return buf;
+}
+
+char* comprimir(char** codificacion, char* input, int *lenInput){
+    //Creo un int puntero en donde almacenar el largo de la serializacion de la forma.
+    int *auxLen = malloc(sizeof(int));
+
+    //Inicializo vacío un char puntero donde almaceno el binario de la compresion
+    char *compresionRaw = malloc(sizeof(char)*10000);
+    strcpy(compresionRaw, "");
+    //Consumo caracter a caraacter del archivo de entrada y lo codifico
+    for (int i = 0; i < *lenInput; i++){
+        strcat(compresionRaw, codificacion[(unsigned char)input[i]]);
+    }
+    //Transformo el binario a chars
+    char *compresion = malloc(sizeof(char)*1000);
+    compresion = implode(compresionRaw, *lenInput, auxLen);
+    return compresion;
 }
 
 int main(int argc, char *argv[]){
@@ -99,9 +149,9 @@ int main(int argc, char *argv[]){
         return 0;
     }
 
-    int *len = malloc(sizeof(int));
+    int *lenInput = malloc(sizeof(int));
     char *path = argv[2];
-    char *buf = readfile(path, len);
+    char *buf = readfile(path, lenInput);
 
     //Inicializa arreglo con frecuencias
     int frecuencias[256];
@@ -110,7 +160,7 @@ int main(int argc, char *argv[]){
     }
 
     //Calcula las frecuencias de cada caracter
-    for(int pos = 0; pos < (*len)-1; pos++){
+    for(int pos = 0; pos < (*lenInput)-1; pos++){
         frecuencias[(int)buf[pos]]++;
     }
 
@@ -121,22 +171,32 @@ int main(int argc, char *argv[]){
         listaNodos = btlist_agregar(listaNodos, charTree);
     }
 
-    BTree arbol = arbol_huffman(listaNodos);
+    BTree arbol = arbolHuffman(listaNodos);
 
-    //Arreglo para agregar los pares [char : codificación]
+    //Arreglo con los pares [caracter : codificación]
     char** codificacion = malloc(sizeof(char*) * 256);
     codificacion_arbol(arbol, codificacion);
 
-    int *newLenSerializacion = malloc(sizeof(int));
-    char *hexa_arbol = implode(comprimir_arbol(arbol), *len, newLenSerializacion);
+    //Serializacion
+    char *serializacion = serializar(arbol);
+    //Armo el nombre del archivo donde almacenare la serializacion
+    char *serializacionPath = malloc(sizeof(char)*100);
+    strcat(serializacionPath, path);
+    strcat(serializacionPath, ".tree");
+    //Escribo el archivo
+    writefile(serializacionPath, serializacion, strlen(serializacion));
 
-    char *treePath = malloc(sizeof(char)*100);
-    treePath = strcat(treePath, path);
-    treePath = strcat(treePath, ".tree");
-    writefile(treePath, hexa_arbol, *newLenSerializacion);
+    //Compresion
+    char *compresion = comprimir(codificacion, buf, lenInput);
+    //Armo el nombre del archivo donde almacenare la compresion
+    char *compresionPath = malloc(sizeof(char)*100);
+    strcat(compresionPath, path);
+    strcat(compresionPath, ".hf");
+    //Escribo el archivo
+    writefile(compresionPath, compresion, strlen(compresion));
 
-    int *newLen = malloc(sizeof(int));
-    char *hexa = implode(compresion(codificacion, buf, len), *len, newLen);
-    writefile(strcat(path, ".hf"), hexa, *newLen);
+    printf("Generados los archivos %s y %s\n", compresionPath, serializacionPath);
+    free(compresionPath);
+    free(serializacionPath);
     return 0;
 }
