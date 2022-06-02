@@ -1,11 +1,8 @@
 make.exe --dry-run --always-make --keep-going --print-directory
 make.exe: Entering directory 'c:/Users/PC/huffman'
 gcc -c main.c -Wall -Wextra -Werror -std=c99 -Os
- 
 gcc -c IO/io.c -Wall -Wextra -Werror -std=c99 -Os
- 
 gcc -c BTree/btree.c -Wall -Wextra -Werror -std=c99 -Os
- 
 gcc -c BTList/btlist.c -Wall -Wextra -Werror -std=c99 -Os
 gcc -o huff main.o io.o btree.o btlist.o -Wall -Wextra -Werror -std=c99 -Os
 make.exe: Leaving directory 'c:/Users/PC/huffman'
