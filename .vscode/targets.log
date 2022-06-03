@@ -7,7 +7,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Wed Jun 01 16:22:33 2022
+# Make data base, printed on Fri Jun 03 11:08:41 2022
 
 # Variables
 
@@ -33,7 +33,7 @@ HOMEDRIVE = C:
 ^D = $(patsubst %/,%,$(patsubst %\,%,$(dir $^)))
 # makefile
 CUR 
-DIR := c:/Users/PC/huffman
+DIR := c:/Users/PC/Desktop/huffman
 # default
 SHELL := sh.exe
 # environment
@@ -59,7 +59,7 @@ PROGRAMW6432 = C:\Program Files
 # environment
 PROGRAMDATA = C:\ProgramData
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-3c5e8543-e3fb-4873-aa31-8474f9f00004-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-a08f5202-be07-44b4-9659-91f89cd83417-sock
 # environment
 VSCODE_CWD = C:\Users\PC\AppData\Local\Programs\Microsoft VS Code
 # environment
@@ -83,7 +83,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_17248_JLKYBXQUOCMFOBQI
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_4656_KWGLMWEITAFMDXAK
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -103,7 +103,7 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 VSCODE_CODE_CACHE_PATH = C:\Users\PC\AppData\Roaming\Code\CachedData\c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
 # environment
@@ -203,7 +203,7 @@ PROCESSOR_LEVEL = 25
 # environment
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
-VSCODE_PID = 17248
+VSCODE_PID = 4656
 # environment
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-FPDJKD9
 # variable set hash-table stats:
@@ -217,20 +217,20 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-FPDJKD9
 
 # C:\ProgramData\Oracle\Java\javapath (key C:/ProgramData/Oracle/Java/javapath, mtime 1648587889): 5 files, no impossibilities.
 # C:\WINDOWS\System32\WindowsPowerShell\v1.0\ (key C:/WINDOWS/System32/WindowsPowerShell/v1.0/, mtime 1648311620): 32 files, no impossibilities.
-# . (key c:/Users/PC/huffman, mtime 1654065418): 18 files, no impossibilities.
+# . (key c:/Users/PC/Desktop/huffman, mtime 1654265302): 20 files, no impossibilities.
 # C:\Program Files\Git\cmd (key C:/Program Files/Git/cmd, mtime 1653258951): 8 files, no impossibilities.
 # C:\WINDOWS\System32\OpenSSH\: could not be stat'd.
 # C:\MinGW\bin (key C:/MinGW/bin, mtime 1653695075): 54 files, no impossibilities.
-# C:\WINDOWS (key C:/WINDOWS, mtime 1652407519): 113 f 
-iles, no impossibilities.
+# C:\WINDOWS (key C:/WINDOWS, mtime 1654175 
+260): 113 files, no impossibilities.
 # C:\WINDOWS\System32\Wbem (key C:/WINDOWS/System32/Wbem, mtime 1652407520): 173 files, no impossibilities.
 # C:\Users\PC\AppData\Local\Microsoft\WindowsApps (key C:/Users/PC/AppData/Local/Microsoft/WindowsApps, mtime 1653405381): 11 files, no impossibilities.
-# C:\WINDOWS\system32 (key C:/WINDOWS/system32, mtime 1654009492): 2975 files, no impossibilities.
+# C:\WINDOWS\system32 (key C:/WINDOWS/system32, mtime 1654256153): 2975 files, no impossibilities.
 # C:\Users\PC\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/PC/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1652912557): 4 files, no impossibilities.
 # C:\Users\PC\AppData\Local\Programs\Python\Python310\ (key C:/Users/PC/AppData/Local/Programs/Python/Python310/, mtime 1648302271): 18 files, no impossibilities.
 # C:\Users\PC\AppData\Local\Programs\Python\Python310\Scripts\ (key C:/Users/PC/AppData/Local/Programs/Python/Python310/Scripts/, mtime 1653372106): 10 files, no impossibilities.
 
-# 3421 files, no impossibilities in 13 directories.
+# 3423 files, no impossibilities in 13 directories.
 
 # Implicit Rules
 
@@ -277,7 +277,6 @@ btlist.o: BTList/btlist.c BTList/btlist.h
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 17):
 	$(CC) -c $< $(FLAGS)
-	
 
 # Not a target:
 .SUFFIXES:
@@ -288,7 +287,7 @@ btlist.o: BTList/btlist.c BTList/btlist.h
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-01 03:27:41
+#  Last modified 2022-06-03 11:08:08
 #  File has been updated.
 #  Successfully updated.
 
@@ -326,8 +325,11 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 21):
+#  recipe to execute (from 'makefile', line 20):
 	rm *.o
+	rm *.tree
+	rm *.hf
+	rm *.txt.dec
 	rm huff
 
 btree.o: BTree/btree.c BTree/btree.h
@@ -358,17 +360,17 @@ IO/io.c:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 7 (5) / strings = 3399 / storage = 51086 B / avg = 15 B
-# current buf: size = 8174 B /  
+# strcache buffers: 7 (6) / strings = 3400 / storage = 51105 B / 
 make.exe: *** No rule to make target 'all'.  Stop.
 
-used = 2104 B / count = 135 / avg = 15 B
-# other used: total = 42912 B / count = 3264 / avg = 13 B
-# other free: total = 62 B / max = 26 B / min = 3 B / avg = 10 B
+ avg = 15 B
+# current buf: size = 8174 B / used = 2099 B / count = 134 / avg = 15 B
+# other used: total = 42931 B / count = 3266 / avg = 13 B
+# other free: total = 38 B / max = 13 B / min = 2 B / avg = 6 B
 
-# strcache performance: lookups = 3466 / hit rate = 1%
+# strcache performance: lookups = 3468 / hit rate = 1%
 # hash-table stats:
-# Load=3399/8192=41%, Rehash=0, Collisions=1155/3466=33%
-# Finished Make data base on Wed Jun 01 16:22:33 2022
+# Load=3400/8192=42%, Rehash=0, Collisions=1154/3468=33%
+# Finished Make data base on Fri Jun 03 11:08:41 2022
 
  
