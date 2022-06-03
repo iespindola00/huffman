@@ -293,10 +293,9 @@ void decompresion(char *path){
 
     char* serializacion_forma_bin = explode(serializacion_forma_chars, 64, lenSerializacionBin);
     
-    //printf("%s", serializacion_forma_bin);
     
-    for (int i = 0; i < 32; i++){   //    256/8 = 64
-        serializacion_hojas_chars[i] = serializacion[i+64];
+    for (int i = 0; i < 256; i++){   //    256/8 = 64
+        serializacion_hojas_chars[i] = serializacion[i+256];
     }
 
     
