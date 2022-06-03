@@ -92,7 +92,6 @@ char *serializarForma( BTree arbol ){
 //Retorna la serializacion de los caracteres del arbol recorriendo el arbol Inorder
 void serializarHojasAux( BTree arbol, char *buf ){
 
-
     if(arbol->left != NULL)
         serializarHojasAux(arbol->left, buf);
 
@@ -151,14 +150,14 @@ char* comprimirInput(char** codificacion, char* input, int *lenInput){
     int *auxLen = malloc(sizeof(int));
 
     //Inicializo vacío un char puntero donde almaceno el binario de la compresion
-    char *compresionRaw = malloc(sizeof(char)*10000);
+    char *compresionRaw = malloc(sizeof(char)*256*(*lenInput));
     strcpy(compresionRaw, "");
     //Consumo caracter a caracter del archivo de entrada y lo codifico
     for (int i = 0; i < *lenInput; i++){
         strcat(compresionRaw, codificacion[(unsigned char)input[i]]);
     }
     //Transformo el binario a chars
-    char *compresion = malloc(sizeof(char)*1000);
+    char *compresion = malloc(sizeof(char)*128*(*lenInput));
     compresion = implode(compresionRaw, strlen(compresionRaw), auxLen);
     //Limpieza
     free(auxLen);
@@ -237,7 +236,7 @@ char *generar_output( BTree arbol, char *compresion, int lenInput){
     int *auxLen = malloc(sizeof(int));
     //Transformo la compresion a su forma binaria
     char *compresionRaw = explode( compresion, lenInput, auxLen);
-    char *output = malloc(sizeof(char)*10000);
+    char *output = malloc(sizeof(char)*256*lenInput);
     strcpy(output, "");
     int outputIndex = 0;
 
@@ -367,6 +366,8 @@ void decompresion(char *path){
     strcat(outputPath, ".dec");   // Nombre del archivo con la serializacion
 
     writefile(outputPath, output, strlen(output));
+
+    printf("Generado el archivo %s\n", outputPath);
 
     //Limpieza
     free(lenCompresion);
