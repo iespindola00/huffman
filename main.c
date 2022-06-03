@@ -295,7 +295,7 @@ void decompresion(char *path){
     
     
     for (int i = 0; i < 256; i++){   //    256/8 = 64
-        serializacion_hojas_chars[i] = serializacion[i+256];
+        serializacion_hojas_chars[i] = serializacion[i+64];
     }
 
     
