@@ -219,7 +219,6 @@ void compresion(char *path){
 
     printf("Generados los archivos %s y %s\n", compresionPath, serializacionPath);
     //Limpieza
-    btreeDestruir(arbol);
     for(int index = 0; index < 256; index++){
         free(codificacion[index]);
     }
@@ -230,6 +229,7 @@ void compresion(char *path){
     free(compresionPath);
     free(serializacion);
     free(serializacionPath);
+    btreeDestruir(arbol);
 }
 
 char *generar_output( BTree arbol, char *compresion, int lenInput){
@@ -238,8 +238,8 @@ char *generar_output( BTree arbol, char *compresion, int lenInput){
     //Transformo la compresion a su forma binaria
     char *compresionRaw = explode( compresion, lenInput, auxLen);
     char *output = malloc(sizeof(char)*10000);
-    int outputIndex = 0;
     strcpy(output, "");
+    int outputIndex = 0;
 
     BTree nodoIndex = arbol;            //Arbol auxiliar para recorrer
     int index = 0;
@@ -291,6 +291,7 @@ BTree parsear_arbol(char* serializacion_forma_bin){
 
     BTree arbolForma = generarArbolForma( serializacion_forma_bin, cont);
 
+    free(cont);
     return arbolForma;
 }
 
@@ -335,7 +336,7 @@ void decompresion(char *path){
     char* serializacionForma = malloc(sizeof(char) * 64);
     char* serializacionHojas = malloc(sizeof(char) * 255);
 
-    for (int i = 0; i < 64; i++){   //    512/8 = 64
+    for (int i = 0; i < 64; i++){
         serializacionForma[i] = serializacion[i];
     }
 
@@ -343,7 +344,7 @@ void decompresion(char *path){
 
     serializacionFormaRaw[0] = serializacionFormaRaw[0];
 
-    for (int i = 0; i < 255; i++){   //    256/8 = 64
+    for (int i = 0; i < 255; i++){
         serializacionHojas[i] = serializacion[i+64];
     }
 
@@ -369,17 +370,20 @@ void decompresion(char *path){
 
     //Limpieza
     free(lenCompresion);
-    free(lenSerializacion);
-    free(lenSerializacionRaw);
-    free(serializacionPath);
     free(compresionPath);
-    free(outputPath);
-    free(serializacion);
     free(compresion);
-    btreeDestruir(arbolForma);
+
+    free(lenSerializacionRaw);
+    free(lenSerializacion);
+    free(serializacion);
+    free(serializacionPath);
+    free(serializacionHojas);
+    free(serializacionForma);
+    free(serializacionFormaRaw);
+    free(output);
+    free(outputPath);
     btreeDestruir(arbolFinal);
 }
-
 
 int main(int argc, char* argv[]){  // char* argv[]
 
