@@ -11,6 +11,23 @@ struct ArrayWrapper {
 
 //Compresion
 
+//Funcion auxiliar que transforma un int en binario, y lo almacena en un char puntero
+char* intToBinary(int num) {
+  char *bin = malloc(sizeof(char)*8);
+  strcpy(bin, "");
+
+  for (int index = 7; index >= 0; index--) {
+    if(num % 2 == 0){
+        bin[index] = '0';
+    } else {
+        bin[index] = '1';
+    }
+    num /= 2;
+  }
+  return bin;
+}
+
+
 void codificacionAuxArbol(BTree arbol, char** codificacion, struct ArrayWrapper arrWrapper, char bit){
     
     // Si es un nodo intermedio
@@ -92,14 +109,13 @@ char *serializarForma( BTree arbol ){
 //Retorna la serializacion de los caracteres del arbol recorriendo el arbol Inorder
 void serializarHojasAux( BTree arbol, char *buf ){
 
+
     if(arbol->left != NULL)
         serializarHojasAux(arbol->left, buf);
 
     if(arbol->caracter != -1){
-        char *hex = malloc(sizeof(char)*2);
-        sprintf( hex, "%c", arbol->caracter);
+        char *hex = intToBinary(arbol->caracter);
         strcat(buf, hex);
-        free(hex);
     }
 
     if(arbol->right != NULL)
@@ -109,39 +125,37 @@ void serializarHojasAux( BTree arbol, char *buf ){
 //Retorna la serializacion de los caracteres del arbol recorriendo el arbol Inorder
 char *serializarHojas( BTree arbol ){
 
-    char *buf = malloc(sizeof(char)*256);
+    char *buf = malloc(sizeof(char)*2048);
     strcpy(buf, "");
     serializarHojasAux(arbol->left, buf);
     serializarHojasAux(arbol->right, buf);
-    printf("len buf:%d\n", (int) strlen(buf));
     return buf;
 }
 
 char *serializar( BTree arbol ){
-    //Creo un int puntero en donde se almacena el largo de la serializacion de la forma.
+    //Creo un int puntero en donde se almacena el largo de la serializacion.
     int *auxLen = malloc(sizeof(int));
 
     //Obtengo el binario de la serializacion de la forma
     char *serializacionFormaRaw = serializarForma(arbol);
+    //Obtengo la serializacion de las hojas
+    char *serializacionHojasRaw = serializarHojas(arbol);
+
+    char *serializacionRaw = malloc(sizeof(char)*(strlen(serializacionFormaRaw)+strlen(serializacionHojasRaw)));
+    strcpy(serializacionRaw, "");
+    strcat(serializacionRaw, serializacionFormaRaw);
+    strcat(serializacionRaw, serializacionHojasRaw);
     //Lo transformo en chars
-    char *serializacionForma = implode(serializacionFormaRaw, strlen(serializacionFormaRaw), auxLen);
-
-    //Obtengo la serializacion de las hojas (ya en chars)
-    char *serializacionHojas = serializarHojas(arbol);
-
-    //Creo un char puntero donde se almacena la serializacion
-    char *buf = malloc(sizeof(char)*512);
-    strcpy(buf, "");
-
-    //Guardo ambas partes en el buf a retornar
-    strcat(buf, serializacionForma);
-    strcat(buf, serializacionHojas);
+    char *serializacion = implode(serializacionRaw, strlen(serializacionRaw), auxLen);
+    printf("auxLen %d\n", *auxLen);
+    printf("serializacionRaw: %s, len: %d\n", serializacionRaw, (int) strlen(serializacionRaw));
+    printf("serializacion: %s, len: %d\n", serializacion, (int) strlen(serializacion));
     //Limpieza
     free(auxLen);
     free(serializacionFormaRaw);
-    free(serializacionForma);
-    free(serializacionHojas);
-    return buf;
+    free(serializacionHojasRaw);
+    free(serializacionRaw);
+    return serializacion;
 }
 
 // esto seria el texto comprimido en un archivo
