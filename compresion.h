@@ -3,7 +3,7 @@
 
 
 struct ArrayWrapper {
-  char buf[100];
+  char buf[255];
 };
 
 
