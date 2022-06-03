@@ -5,6 +5,7 @@
 #include "BTree/btree.h"
 #include "BTList/btlist.h"
 #include "compresion.h"
+#include "descompresion.h"
 
 int main(int argc, char* argv[]){  // char* argv[]
 
