@@ -12,7 +12,7 @@ char *generar_output( BTree arbol, char *compresion, int lenInput){
     int *auxLen = malloc(sizeof(int));
     //Transformo la compresion a su forma binaria
     char *compresionRaw = explode( compresion, lenInput, auxLen);
-    char *output = malloc(sizeof(char)*10000);
+    char *output = malloc(sizeof(char)*256*lenInput);
     strcpy(output, "");
     int outputIndex = 0;
 
@@ -41,8 +41,6 @@ char *generar_output( BTree arbol, char *compresion, int lenInput){
 
     return output;
 }
-
-
 
 BTree generarArbolForma( char *serializacionForma, int *index ){
 
@@ -144,6 +142,8 @@ void decompresion(char *path){
     strcat(outputPath, ".dec");   // Nombre del archivo con la serializacion
 
     writefile(outputPath, output, strlen(output));
+
+    printf("Generado el archivo %s\n", outputPath);
 
     //Limpieza
     free(lenCompresion);

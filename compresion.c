@@ -147,14 +147,14 @@ char* comprimirInput(char** codificacion, char* input, int *lenInput){
     int *auxLen = malloc(sizeof(int));
 
     //Inicializo vacío un char puntero donde almaceno el binario de la compresion
-    char *compresionRaw = malloc(sizeof(char)*10000);
+    char *compresionRaw = malloc(sizeof(char)*256*(*lenInput));
     strcpy(compresionRaw, "");
     //Consumo caracter a caracter del archivo de entrada y lo codifico
     for (int i = 0; i < *lenInput; i++){
         strcat(compresionRaw, codificacion[(unsigned char)input[i]]);
     }
     //Transformo el binario a chars
-    char *compresion = malloc(sizeof(char)*1000);
+    char *compresion = malloc(sizeof(char)*128*(*lenInput));
     compresion = implode(compresionRaw, strlen(compresionRaw), auxLen);
     //Limpieza
     free(auxLen);

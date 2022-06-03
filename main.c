@@ -6,8 +6,6 @@
 #include "BTList/btlist.h"
 #include "compresion.h"
 
-
-
 int main(int argc, char* argv[]){  // char* argv[]
 
     if(argc != 3){
