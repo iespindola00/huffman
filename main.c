@@ -346,7 +346,6 @@ void decompresion(char *path){
     char* serializacion_forma_chars = malloc(sizeof(char) * 64);
     char* serializacion_hojas_chars = malloc(sizeof(char) * 256);
 
-
     for (int i = 0; i < 64; i++){   //    512/8 = 64
         serializacion_forma_chars[i] = serializacion[i];
     }
@@ -355,13 +354,11 @@ void decompresion(char *path){
 
     //printf("%s", serializacion_forma_bin);
 
-    for (int i = 0; i < 32; i++){   //    256/8 = 64
+    for (int i = 0; i < 256; i++){   //    256/8 = 64
         serializacion_hojas_chars[i] = serializacion[i+64];
     }
 
-
     // probando
-
 
     BTree arbolForma = parsear_arbol(serializacion_forma_bin);
 
@@ -370,7 +367,6 @@ void decompresion(char *path){
     BTree arbolFinal = parsear_hojas(arbolForma, serializacion_hojas_chars);
 
     //btreeImprimir(arbolFinal);
-
 
     btreeDestruir(arbolForma);
     btreeDestruir(arbolFinal);
