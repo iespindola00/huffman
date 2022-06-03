@@ -203,9 +203,7 @@ BTree parsear_arbol(char* serializacion_forma_bin){
 // ======================  hojas  ==============================
 
 void parsear_hojas_rec(BTree arbol_forma, char* serializacion_hojas, int* cont){
-    if(*cont >= 32){
-        printf("se pasa de 256 chars");  //  ??????????????????????? 256 ??????????????????????????
-    }
+    printf("contador hojas: %d  ", *cont);  
     // es nodo
     if (arbol_forma->left != NULL && arbol_forma->right != NULL){
         arbol_forma->caracter = (int)serializacion_hojas[*cont];     // almacenamos el char casteado a int
@@ -219,7 +217,7 @@ void parsear_hojas_rec(BTree arbol_forma, char* serializacion_hojas, int* cont){
         arbol_forma->caracter = (int)serializacion_hojas[*cont];     // almacenamos el char casteado a int
     }
 }
-
+ 
 BTree parsear_hojas(BTree arbol_forma, char* serializacion_hojas_chars){
     int* cont = malloc(sizeof(int));
     *cont = 0;
@@ -236,10 +234,8 @@ BTree parsear_hojas(BTree arbol_forma, char* serializacion_hojas_chars){
 // y la serialización de la forma y las hojas del arbol
 
 void compresion(char *path){
-
     int *lenInput = malloc(sizeof(int));
     char *buf = readfile(path, lenInput);
-
     //Inicializa arreglo con frecuencias
     int frecuencias[256];
     for(int index = 0; index < 256; index++){
@@ -272,6 +268,7 @@ void compresion(char *path){
     strcat(serializacionPath, path);
     strcat(serializacionPath, ".tree");
     //Escribo el archivo
+
     writefile(serializacionPath, serializacion, strlen(serializacion));
 
     //Comprimo el texto con la codificación y lo almaceno en compresión (como chars)
@@ -341,7 +338,9 @@ void decompresion(char *path){
 
     // este texto esta en chars (a, b, c) y para la forma necesito transformarlo en bits (0 izq, 1 der)
     // so tomo solo los chars de la forma y lo exploto
-    char* serializacion = readfile(serializacionPath, lenSerializacion);
+
+    printf("%s", serializacionPath);
+    char* serializacion = readfile(serializacionPath, lenSerializacion); //!!!!!!!!!!!!!!!!!
 
     char* serializacion_forma_chars = malloc(sizeof(char) * 64);
     char* serializacion_hojas_chars = malloc(sizeof(char) * 256);
@@ -384,7 +383,21 @@ int main(int argc, char* argv[]){  // char* argv[]
     if(strcmp(argv[1],"C") == 0){
         compresion(argv[2]);
     } else if(strcmp(argv[1],"D") == 0){
-        decompresion(argv[2]);
+        char* archComp = malloc(sizeof(char) * 100);
+        strcpy(archComp, "");
+        strcpy(archComp, argv[2]);
+        strcpy(archComp, ".tree");
+
+
+        FILE* f = fopen(archComp, "r");
+        if(f != NULL){
+            free(f);
+            decompresion(argv[2]);
+        }
+        else{
+            printf("debe existir un .tree para poder descomprimir, intente comprimiendo");
+            free(f);
+        }
     } else {
         printf("Error en la accion a realizar\n");
     }
