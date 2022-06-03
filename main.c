@@ -5,30 +5,29 @@
 #include "BTree/btree.h"
 #include "BTList/btlist.h"
 
-struct ArrayWrapper
-{
+struct ArrayWrapper {
     char buf[100];
 };
 
 //Compresion
 
-void codificacionAuxArbol(BTree arbol, char** codificacion, struct ArrayWrapper arrWrapper, char char01){
+void codificacionAuxArbol(BTree arbol, char** codificacion, struct ArrayWrapper arrWrapper, char bit){
     
     // Si es un nodo intermedio
     if (arbol->caracter == -1){
-        // agrego un solo char
-        arrWrapper.buf[strlen(arrWrapper.buf)] = char01;
+        // Agrego un solo char
+        arrWrapper.buf[strlen(arrWrapper.buf)] = bit;
         arrWrapper.buf[strlen(arrWrapper.buf) + 1] = '\0';
-        // recursion
+        // Recursion
         codificacionAuxArbol(arbol->left, codificacion, arrWrapper, '0');
         codificacionAuxArbol(arbol->right, codificacion, arrWrapper, '1');
     }
-    // Si es UNA hoja
+    // Si es una hoja
     else{
-        // agrego un solo char
+        // Agrego un solo char
         if(strlen(arrWrapper.buf) + 1 >= 100) { printf("Error: El tamaño buf es demasiado pequeño"); }
         else {
-            arrWrapper.buf[strlen(arrWrapper.buf)] = char01;
+            arrWrapper.buf[strlen(arrWrapper.buf)] = bit;
             arrWrapper.buf[strlen(arrWrapper.buf) + 1] = '\0';
         }
         codificacion[arbol->caracter] = malloc(sizeof(char) * strlen(arrWrapper.buf) + 1);
@@ -70,46 +69,55 @@ BTree arbolHuffman(BTList lista){
     return arbolFinal;
 }
 
-//Retorna la serializacion binaria de la forma del arbol
-char *serializarForma( BTree arbol ){
-    char *buf = malloc(100000*sizeof(char));
+void serializarFormaAux( BTree arbol , char *buf){
     if(arbol->caracter == -1){
         strcat(buf, "0");
-        strcat(buf, serializarForma(arbol->left));
-        strcat(buf, serializarForma(arbol->right));
+        serializarFormaAux(arbol->left, buf);
+        serializarFormaAux(arbol->right, buf);
     } else {
         strcat(buf, "1");
     }
+}
+
+//Retorna la serializacion binaria de la forma del arbol
+char *serializarForma( BTree arbol ){
+    char *buf = malloc(100000*sizeof(char));
+    strcpy(buf, "0");
+    serializarFormaAux(arbol->left, buf);
+    serializarFormaAux(arbol->right, buf);
 
     return buf;
 }
 
 //Retorna la serializacion de los caracteres del arbol recorriendo el arbol Inorder
-char *serializarHojas( BTree arbol ){
-    char *buf = malloc(100000*sizeof(char));
+void serializarHojasAux( BTree arbol, char *buf ){
 
-    if(arbol->left != NULL){
-        strcat(buf, serializarHojas(arbol->left));
-    }
+    if(arbol->left != NULL)
+        serializarHojasAux(arbol->left, buf);
 
     if(arbol->caracter != -1){
-        char hex[10];
+        char *hex = malloc(sizeof(char)*2);
         sprintf( hex, "%c", arbol->caracter);
         strcat(buf, hex);
+        free(hex);
     }
 
-    if(arbol->right != NULL){
-        strcat(buf, serializarHojas(arbol->right));
-    }
+    if(arbol->right != NULL)
+        serializarHojasAux(arbol->right, buf);
+}
+
+//Retorna la serializacion de los caracteres del arbol recorriendo el arbol Inorder
+char *serializarHojas( BTree arbol ){
+    char *buf = malloc(sizeof(char)*256);
+    strcpy(buf, "");
+    serializarHojasAux(arbol->left, buf);
+    serializarHojasAux(arbol->right, buf);
 
     return buf;
 }
 
 char *serializar( BTree arbol ){
-    //Creo un char puntero donde almacenaré la serializacion
-    char *buf = malloc(sizeof(char)*1000);
-
-    //Creo un int puntero en donde almacenar el largo de la serializacion de la forma.
+    //Creo un int puntero en donde se almacena el largo de la serializacion de la forma.
     int *auxLen = malloc(sizeof(int));
 
     //Obtengo el binario de la serializacion de la forma
@@ -120,10 +128,18 @@ char *serializar( BTree arbol ){
     //Obtengo la serializacion de las hojas (ya en chars)
     char *serializacionHojas = serializarHojas(arbol);
 
+    //Creo un char puntero donde se almacena la serializacion
+    char *buf = malloc(sizeof(char)*512);
+    strcpy(buf, "");
+
     //Guardo ambas partes en el buf a retornar
     strcat(buf, serializacionHojas);
     strcat(buf, serializacionForma);
-
+    //Limpieza
+    free(auxLen);
+    free(serializacionFormaRaw);
+    free(serializacionForma);
+    free(serializacionHojas);
     return buf;
 }
 
@@ -134,13 +150,16 @@ char* comprimirInput(char** codificacion, char* input, int *lenInput){
     //Inicializo vacío un char puntero donde almaceno el binario de la compresion
     char *compresionRaw = malloc(sizeof(char)*10000);
     strcpy(compresionRaw, "");
-    //Consumo caracter a caraacter del archivo de entrada y lo codifico
+    //Consumo caracter a caracter del archivo de entrada y lo codifico
     for (int i = 0; i < *lenInput; i++){
         strcat(compresionRaw, codificacion[(unsigned char)input[i]]);
     }
     //Transformo el binario a chars
     char *compresion = malloc(sizeof(char)*1000);
     compresion = implode(compresionRaw, *lenInput, auxLen);
+    //Limpieza
+    free(auxLen);
+    free(compresionRaw);
     return compresion;
 }
 
@@ -171,6 +190,7 @@ BTree parsear_arbol(char* buf){
 
     // Obtengo los caracteres correspondientes a la forma
     char* serializacion_forma = malloc(sizeof(char) * 512+1);
+
     for (int i = 0; i < 512; i++){
         serializacion_forma[i] = buf[i];
     }
@@ -217,8 +237,12 @@ BTree parsear_hojas(BTree arbol_forma, char* arch){
     *cont = 0;
     parsear_hojas_rec(arbol_forma, serializacion_hojas, cont);
 
-    return arbol_forma;
+    //Limpieza
+    free(len_serializacion);
+    free(serializacion);
+    free(serializacion_hojas);
 
+    return arbol_forma;
 }
 
 void compresion(char *path){
@@ -254,6 +278,7 @@ void compresion(char *path){
     char *serializacion = serializar(arbol);
     //Armo el nombre del archivo donde almacenare la serializacion
     char *serializacionPath = malloc(sizeof(char)*100);
+    strcpy(serializacionPath, "");
     strcat(serializacionPath, path);
     strcat(serializacionPath, ".tree");
     //Escribo el archivo
@@ -263,15 +288,54 @@ void compresion(char *path){
     char *compresion = comprimirInput(codificacion, buf, lenInput);
     //Armo el nombre del archivo donde almacenare la compresion
     char *compresionPath = malloc(sizeof(char)*100);
+    strcpy(compresionPath, "");
     strcat(compresionPath, path);
     strcat(compresionPath, ".hf");
     //Escribo el archivo
     writefile(compresionPath, compresion, strlen(compresion));
 
     printf("Generados los archivos %s y %s\n", compresionPath, serializacionPath);
+    btreeDestruir(arbol);
+    //Limpieza
+    for(int index = 0; index < 256; index++){
+        free(codificacion[index]);
+    }
+    free(codificacion);
+    free(lenInput);
+    free(buf);
+    free(compresion);
     free(compresionPath);
+    free(serializacion);
     free(serializacionPath);
+}
 
+char *generar_output( BTree arbol, char *compresion, int lenInput){
+
+    int *auxLen = malloc(sizeof(int));
+    //Transformo la compresion a su forma binaria
+    char *compresionRaw = explode( compresion, lenInput, auxLen);
+    char *output = malloc(sizeof(char)*10000);
+    int outputIndex = 0;
+    strcpy(output, "");
+
+    BTree nodoIndex = arbol;            //Arbol auxiliar para recorrer
+    for(int index = 0; index < *auxLen; index++){
+        if(nodoIndex->caracter == -1){  //Si estoy parado en un nodo intermedio
+            //Consumo del binario, si hay un 0 continuo con el hijo izquierdo. Sino, con el derecho.
+            if( compresionRaw[index] == '0' ){
+                nodoIndex = nodoIndex->left;
+            } else {
+                nodoIndex = nodoIndex->right;
+            }
+        } else {
+            //Si estoy parado en una hoja, agrego el caracter al archivo de salid
+            output[outputIndex] = nodoIndex->caracter;
+            outputIndex++;
+        }
+        index++;
+    }
+
+    return output;
 }
 
 void decompresion(char *path){
@@ -294,13 +358,11 @@ int main(int argc, char *argv[]){
         return 0;
     }
 
-    // Accion: 'C' para comprimir, 'D' para descomprimir7
+    // Accion: 'C' para comprimir, 'D' para descomprimir
     if(strcmp(argv[1],"C") == 0){
-        printf("C\n");
         compresion(argv[2]);
     } else {
         if(strcmp(argv[1],"D") == 0){
-        printf("D\n");
         decompresion(argv[2]);
         } else {
             printf("Error en la accion a realizar\n");
