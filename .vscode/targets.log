@@ -7,7 +7,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Fri Jun 03 11:08:41 2022
+# Make data base, printed on Fri Jun 03 12:26:24 2022
 
 # Variables
 
@@ -59,7 +59,7 @@ PROGRAMW6432 = C:\Program Files
 # environment
 PROGRAMDATA = C:\ProgramData
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-a08f5202-be07-44b4-9659-91f89cd83417-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-37dc7440-08f9-4324-aced-e53a07614f45-sock
 # environment
 VSCODE_CWD = C:\Users\PC\AppData\Local\Programs\Microsoft VS Code
 # environment
@@ -83,7 +83,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_4656_KWGLMWEITAFMDXAK
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5536_JEYTCWUKOLOEINBT
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -203,7 +203,7 @@ PROCESSOR_LEVEL = 25
 # environment
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
-VSCODE_PID = 4656
+VSCODE_PID = 5536
 # environment
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-FPDJKD9
 # variable set hash-table stats:
@@ -217,7 +217,7 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-FPDJKD9
 
 # C:\ProgramData\Oracle\Java\javapath (key C:/ProgramData/Oracle/Java/javapath, mtime 1648587889): 5 files, no impossibilities.
 # C:\WINDOWS\System32\WindowsPowerShell\v1.0\ (key C:/WINDOWS/System32/WindowsPowerShell/v1.0/, mtime 1648311620): 32 files, no impossibilities.
-# . (key c:/Users/PC/Desktop/huffman, mtime 1654265302): 20 files, no impossibilities.
+# . (key c:/Users/PC/Desktop/huffman, mtime 1654267286): 18 files, no impossibilities.
 # C:\Program Files\Git\cmd (key C:/Program Files/Git/cmd, mtime 1653258951): 8 files, no impossibilities.
 # C:\WINDOWS\System32\OpenSSH\: could not be stat'd.
 # C:\MinGW\bin (key C:/MinGW/bin, mtime 1653695075): 54 files, no impossibilities.
@@ -230,7 +230,7 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-FPDJKD9
 # C:\Users\PC\AppData\Local\Programs\Python\Python310\ (key C:/Users/PC/AppData/Local/Programs/Python/Python310/, mtime 1648302271): 18 files, no impossibilities.
 # C:\Users\PC\AppData\Local\Programs\Python\Python310\Scripts\ (key C:/Users/PC/AppData/Local/Programs/Python/Python310/Scripts/, mtime 1653372106): 10 files, no impossibilities.
 
-# 3423 files, no impossibilities in 13 directories.
+# 3421 files, no impossibilities in 13 directories.
 
 # Implicit Rules
 
@@ -360,17 +360,17 @@ IO/io.c:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 7 (6) / strings = 3400 / storage = 51105 B / 
+# strcache buffers: 7 (4) / strings = 3401 / storage = 51094 B / 
 make.exe: *** No rule to make target 'all'.  Stop.
 
  avg = 15 B
-# current buf: size = 8174 B / used = 2099 B / count = 134 / avg = 15 B
-# other used: total = 42931 B / count = 3266 / avg = 13 B
-# other free: total = 38 B / max = 13 B / min = 2 B / avg = 6 B
+# current buf: size = 8174 B / used = 2121 B / count = 137 / avg = 15 B
+# other used: total = 42920 B / count = 3264 / avg = 13 B
+# other free: total = 71 B / max = 26 B / min = 1 B / avg = 11 B
 
-# strcache performance: lookups = 3468 / hit rate = 1%
+# strcache performance: lookups = 3466 / hit rate = 1%
 # hash-table stats:
-# Load=3400/8192=42%, Rehash=0, Collisions=1154/3468=33%
-# Finished Make data base on Fri Jun 03 11:08:41 2022
+# Load=3401/8192=42%, Rehash=0, Collisions=1161/3466=33%
+# Finished Make data base on Fri Jun 03 12:26:24 2022
 
  

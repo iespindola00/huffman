@@ -5,7 +5,6 @@
 #include "BTree/btree.h"
 #include "BTList/btlist.h"
 
-
 //   ============================  descompresión  ====================================
 
 char *generar_output( BTree arbol, char *compresion, int lenInput){
@@ -86,15 +85,15 @@ void parsear_hojas_rec(BTree arbol_forma, char* serializacion_hojas, int* cont){
     }
 }
 
-BTree parsear_hojas(BTree arbol_forma, char* serializacion_hojas_chars){
+BTree parsear_hojas(BTree arbol, char* serializacion_hojas_chars){
     int* cont = malloc(sizeof(int));
     *cont = 0;
-    parsear_hojas_rec(arbol_forma, serializacion_hojas_chars, cont);
+    parsear_hojas_rec(arbol, serializacion_hojas_chars, cont);
 
     //Limpieza
     free(cont);
 
-    return arbol_forma;
+    return arbol;   // arbol rearmado desde la serialización
 }
 
 
