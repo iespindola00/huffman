@@ -146,7 +146,8 @@ char* comprimirInput(char** codificacion, char* input, int *lenInput){
 
   //Inicializo vacío un char puntero donde almaceno el binario de la compresion
   char *compresionRaw = malloc(sizeof(char)*256*(*lenInput));
-  strcpy(compresionRaw, "");
+  memset(compresionRaw, "", sizeof(char)*256*(*lenInput));
+  //strcpy(compresionRaw, "");
   //Consumo caracter a caracter del archivo de entrada y lo codifico
   for (int i = 0; i < *lenInput; i++){
     strcat(compresionRaw, codificacion[(unsigned char)input[i]]);
@@ -187,7 +188,7 @@ void compresion(char *path){
   BTree arbol = arbolHuffman(listaNodos);
 
   //Arreglo con los pares [caracter : codificación]
-  char** codificacion = malloc(sizeof(char*) * 256);
+  char** codificacion = calloc(sizeof(char*), 256);
   codificacionArbol(arbol, codificacion);
 
   //Serializacion
