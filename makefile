@@ -20,5 +20,6 @@ clean:
 	rm *.o
 	rm *.tree
 	rm *.hf
+	rm *.txt.dec
 	rm huff
 .PHONY = clean

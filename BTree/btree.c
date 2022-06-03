@@ -31,10 +31,15 @@ BTree btreeUnir(BTree left, BTree right) {
 }  
 
 void btreeImprimir(BTree arbol){
-  if(arbol->caracter == -1){
+  if(arbol->left){
+    //printf("Left\n");
     btreeImprimir(arbol->left);
-    btreeImprimir(arbol->right);
-  } else {
-    printf("%d\n", arbol->caracter);
+  } else{
+    printf("Char: %d\n", arbol->caracter);
   }
+  if(arbol->right){
+    //printf("Right\n");
+    btreeImprimir(arbol->right);
+  }
+
 }
