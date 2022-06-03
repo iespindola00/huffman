@@ -152,7 +152,7 @@ char* comprimirInput(char** codificacion, char* input, int *lenInput){
     strcat(compresionRaw, codificacion[(unsigned char)input[i]]);
   }
   //Transformo el binario a chars
-  char *compresion = malloc(sizeof(char)*128*(*lenInput));
+  char *compresion = calloc(sizeof(char), 128*(*lenInput));
   compresion = implode(compresionRaw, strlen(compresionRaw), auxLen);
   //Limpieza
   free(auxLen);
