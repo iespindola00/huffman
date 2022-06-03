@@ -11,23 +11,6 @@ struct ArrayWrapper {
 
 //Compresion
 
-//Funcion auxiliar que transforma un int en binario, y lo almacena en un char puntero
-char* intToBinary(int num) {
-  char *bin = malloc(sizeof(char)*8);
-  strcpy(bin, "");
-
-  for (int index = 7; index >= 0; index--) {
-    if(num % 2 == 0){
-        bin[index] = '0';
-    } else {
-        bin[index] = '1';
-    }
-    num /= 2;
-  }
-  return bin;
-}
-
-
 void codificacionAuxArbol(BTree arbol, char** codificacion, struct ArrayWrapper arrWrapper, char bit){
     
     // Si es un nodo intermedio
@@ -114,8 +97,10 @@ void serializarHojasAux( BTree arbol, char *buf ){
         serializarHojasAux(arbol->left, buf);
 
     if(arbol->caracter != -1){
-        char *hex = intToBinary(arbol->caracter);
+        char *hex = malloc(sizeof(char)*2);
+        sprintf( hex, "%c", arbol->caracter);
         strcat(buf, hex);
+        free(hex);
     }
 
     if(arbol->right != NULL)
@@ -125,7 +110,7 @@ void serializarHojasAux( BTree arbol, char *buf ){
 //Retorna la serializacion de los caracteres del arbol recorriendo el arbol Inorder
 char *serializarHojas( BTree arbol ){
 
-    char *buf = malloc(sizeof(char)*2048);
+    char *buf = malloc(sizeof(char)*256);
     strcpy(buf, "");
     serializarHojasAux(arbol->left, buf);
     serializarHojasAux(arbol->right, buf);
@@ -133,29 +118,31 @@ char *serializarHojas( BTree arbol ){
 }
 
 char *serializar( BTree arbol ){
-    //Creo un int puntero en donde se almacena el largo de la serializacion.
+    //Creo un int puntero en donde se almacena el largo de la serializacion de la forma.
     int *auxLen = malloc(sizeof(int));
 
     //Obtengo el binario de la serializacion de la forma
     char *serializacionFormaRaw = serializarForma(arbol);
-    //Obtengo la serializacion de las hojas
-    char *serializacionHojasRaw = serializarHojas(arbol);
-
-    char *serializacionRaw = malloc(sizeof(char)*(strlen(serializacionFormaRaw)+strlen(serializacionHojasRaw)));
-    strcpy(serializacionRaw, "");
-    strcat(serializacionRaw, serializacionFormaRaw);
-    strcat(serializacionRaw, serializacionHojasRaw);
     //Lo transformo en chars
-    char *serializacion = implode(serializacionRaw, strlen(serializacionRaw), auxLen);
-    printf("auxLen %d\n", *auxLen);
-    printf("serializacionRaw: %s, len: %d\n", serializacionRaw, (int) strlen(serializacionRaw));
-    printf("serializacion: %s, len: %d\n", serializacion, (int) strlen(serializacion));
+    char *serializacionForma = implode(serializacionFormaRaw, strlen(serializacionFormaRaw), auxLen);
+    printf("Len: %d", (int) strlen(serializacionForma));
+
+    //Obtengo la serializacion de las hojas (ya en chars)
+    char *serializacionHojas = serializarHojas(arbol);
+
+    //Creo un char puntero donde se almacena la serializacion
+    char *buf = malloc(sizeof(char)*512);
+    strcpy(buf, "");
+
+    //Guardo ambas partes en el buf a retornar
+    strcat(buf, serializacionForma);
+    strcat(buf, serializacionHojas);
     //Limpieza
     free(auxLen);
     free(serializacionFormaRaw);
-    free(serializacionHojasRaw);
-    free(serializacionRaw);
-    return serializacion;
+    free(serializacionForma);
+    free(serializacionHojas);
+    return buf;
 }
 
 // esto seria el texto comprimido en un archivo
@@ -267,7 +254,7 @@ void compresion(char *path){
 
     //Genero un BTree para cada caracter, y lo agrego ordenenado segun su peso a una BTList
     BTList listaNodos = NULL;
-    for(int index = 0; index < 256; index++){
+    for(int index = 1; index < 256; index++){
         BTree charTree = btreeCrear(index, frecuencias[index]);
         listaNodos = btlistAgregar(listaNodos, charTree);
     }

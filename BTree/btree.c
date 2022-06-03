@@ -32,11 +32,9 @@ BTree btreeUnir(BTree left, BTree right) {
 
 void btreeImprimir(BTree arbol){
   if(arbol->caracter == -1){
-    printf("Left:\n");
     btreeImprimir(arbol->left);
-    printf("Right:\n");
     btreeImprimir(arbol->right);
   } else {
-    printf("%c\n", arbol->caracter);
+    printf("%d\n", arbol->caracter);
   }
 }
